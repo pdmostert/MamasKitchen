@@ -1,0 +1,666 @@
+/* Simple, organized CSS for Mama's Kitchen */
+
+/* CSS Variables - Easy to change colors */
+:root {
+  --primary-color: #000;
+  --background-color: #fff;
+  --text-color: #374151;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+
+  /* Meal type colors */
+  --breakfast-color: #ea580c;
+  --breakfast-bg: #fff7ed;
+  --breakfast-border: #fed7aa;
+
+  --lunch-color: #16a34a;
+  --lunch-bg: #f0fdf4;
+  --lunch-border: #bbf7d0;
+
+  --dinner-color: #2563eb;
+  --dinner-bg: #eff6ff;
+  --dinner-border: #bfdbfe;
+
+  --snack-color: #9333ea;
+  --snack-bg: #faf5ff;
+  --snack-border: #e9d5ff;
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+/* Header styles */
+header {
+  background: #f8f9fa; /* Light grey background */
+  border-bottom: 2px solid #e9ecef; /* Separator line */
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 0;
+  margin: 0;
+}
+
+header .max-w-7xl {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+header .mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header .px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+header .flex {
+  display: flex;
+}
+
+header .justify-between {
+  justify-content: space-between;
+}
+
+header .items-center {
+  align-items: center;
+}
+
+header .h-16 {
+  height: 4rem;
+}
+
+header .gap-3 {
+  gap: 0.75rem;
+}
+
+header .h-12 {
+  height: 3rem;
+}
+
+header .w-auto {
+  width: auto;
+}
+
+header .text-xl {
+  font-size: 1.25rem;
+}
+
+header .font-semibold {
+  font-weight: 600;
+}
+
+header .text-gray-900 {
+  color: #111827;
+}
+
+/* Navigation styles */
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* Even spacing between buttons */
+}
+
+header .hidden {
+  display: none;
+}
+
+header .md\:flex {
+  display: flex;
+}
+
+/* Navigation button styles */
+header nav button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid #dee2e6;
+  border-radius: 0.5rem;
+  background: white;
+  color: black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+  min-width: 110px;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Active button (white on black) */
+header nav button.bg-black {
+  background: black !important;
+  color: white !important;
+  border-color: black !important;
+}
+
+header nav button.text-white {
+  color: white !important;
+}
+
+/* Inactive button styles (black on white) */
+header nav button.text-gray-700 {
+  background: white;
+  color: black;
+  border-color: #dee2e6;
+}
+
+/* Inactive button hover */
+header nav button.hover\:bg-gray-100:hover:not(.bg-black) {
+  background: #f8f9fa !important;
+  border-color: #adb5bd;
+}
+
+header nav button .text-sm {
+  font-size: 0.875rem;
+  margin-right: 0.25rem;
+}
+
+header nav button .hidden.sm\:inline {
+  display: inline;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  header .md\:flex {
+    display: none;
+  }
+
+  header .hidden {
+    display: block;
+  }
+}
+
+&:hover {
+  background-color: #f3f4f6;
+}
+
+&.active {
+  background-color: var(--primary-color);
+  color: white;
+  /* Main content styles */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  main.max-w-7xl {
+    max-width: 1200px;
+  }
+
+  main.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  main.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  main.py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  /* Responsive main padding */
+  @media (min-width: 640px) {
+    main.sm\:px-6 {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    main.lg\:px-8 {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  /* Meal Plan styles */
+  .meal-plan .title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+  }
+
+/* Meal Plan Grid - Very specific selector */
+div.meal-plan div.grid {
+  display: grid !important;
+  grid-template-columns: auto repeat(7, 1fr) !important;
+  gap: 1rem !important;
+  align-items: start !important;
+  width: 100%;
+  overflow-x: auto;
+  border: 2px solid red; /* DEBUG: Temporary border to see grid */
+  padding: 1rem; /* DEBUG: Padding to see content */
+}
+
+/* Fallback - just in case */
+.grid {
+  display: grid !important;
+  grid-template-columns: auto repeat(7, 1fr) !important;
+  gap: 1rem !important;
+}
+
+@media (max-width: 768px) {
+  .meal-plan .grid,
+  div.meal-plan div.grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+}  .meal-plan .day-header {
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-color);
+    padding: 0.75rem 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .meal-plan .meal-type-label {
+    font-weight: 600;
+    color: var(--text-color);
+    padding: 1rem 0.5rem;
+    text-align: right;
+    align-self: center;
+  }
+
+  @media (max-width: 768px) {
+    .meal-plan .meal-type-label {
+      text-align: center;
+      padding: 0.5rem;
+    }
+  }
+
+  .meal-plan .meal-slot {
+    min-height: 120px;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: 2px dashed #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #f9fafb;
+  }
+
+  .meal-plan .meal-slot:hover {
+    border-color: #9ca3af;
+    background: #f3f4f6;
+  }
+
+  /* Meal type specific colors */
+  .meal-plan .meal-slot.breakfast {
+    background: var(--breakfast-bg);
+    border-color: var(--breakfast-border);
+    color: var(--breakfast-color);
+  }
+
+  .meal-plan .meal-slot.breakfast:hover {
+    border-color: var(--breakfast-color);
+    background: #ffedd5;
+  }
+
+  .meal-plan .meal-slot.lunch {
+    background: var(--lunch-bg);
+    border-color: var(--lunch-border);
+    color: var(--lunch-color);
+  }
+
+  .meal-plan .meal-slot.lunch:hover {
+    border-color: var(--lunch-color);
+    background: #dcfce7;
+  }
+
+  .meal-plan .meal-slot.dinner {
+    background: var(--dinner-bg);
+    border-color: var(--dinner-border);
+    color: var(--dinner-color);
+  }
+
+  .meal-plan .meal-slot.dinner:hover {
+    border-color: var(--dinner-color);
+    background: #dbeafe;
+  }
+
+  .meal-plan .meal-slot.snack {
+    background: var(--snack-bg);
+    border-color: var(--snack-border);
+    color: var(--snack-color);
+  }
+
+  .meal-plan .meal-slot.snack:hover {
+    border-color: var(--snack-color);
+    background: #f3e8ff;
+  }
+
+  /* When meal slot has content */
+  .meal-plan .meal-slot.filled {
+    border-style: solid;
+    border-width: 1px;
+    background: white;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem;
+  }
+
+  .meal-plan .meal-slot .meal-image {
+    width: 100%;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .meal-plan .meal-slot .meal-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .meal-plan .meal-slot .meal-actions {
+    display: flex;
+    gap: 0.25rem;
+    justify-content: center;
+  }
+
+  .meal-plan .meal-slot .meal-actions button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .meal-plan .meal-slot .meal-actions button.view-btn {
+    background: #f3f4f6;
+    color: var(--text-color);
+  }
+
+  .meal-plan .meal-slot .meal-actions button.view-btn:hover {
+    background: #e5e7eb;
+  }
+
+  .meal-plan .meal-slot .meal-actions button.remove-btn {
+    background: #fef2f2;
+    color: var(--error-color);
+  }
+
+  .meal-plan .meal-slot .meal-actions button.remove-btn:hover {
+    background: #fee2e2;
+  }
+
+  .meal-plan .meal-slot .add-meal-text {
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+}
+
+/* DEBUG: Test if CSS is working */
+footer {
+  background: red !important;
+  border: 10px solid blue !important;
+  padding: 20px !important;
+}
+
+/* DEBUG: Test meal plan */
+.meal-plan {
+  background: yellow !important;
+  border: 5px solid green !important;
+  padding: 20px !important;
+}
+
+/* DEBUG: Add all the missing Tailwind classes the footer needs */
+.flex {
+  display: flex !important;
+}
+
+.flex-col {
+  flex-direction: column !important;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.gap-2 {
+  gap: 0.5rem !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
+
+.h-6 {
+  height: 1.5rem !important;
+}
+
+.w-auto {
+  width: auto !important;
+}
+
+.font-medium {
+  font-weight: 500 !important;
+}
+
+.text-sm {
+  font-size: 0.875rem !important;
+}
+
+.text-xs {
+  font-size: 0.75rem !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+/* Responsive classes */
+@media (min-width: 768px) {
+  .md\:flex-row {
+    flex-direction: row !important;
+  }
+  
+  .md\:mb-0 {
+    margin-bottom: 0 !important;
+  }
+  
+  .md\:text-right {
+    text-align: right !important;
+  }
+}
+
+/* Original footer styles */
+.bg-gray-50 {
+  background-color: #f9fafb;
+}
+
+.border-t {
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+
+.border-gray-200 {
+  border-color: #e5e7eb;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}  footer .max-w-7xl {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+  }
+
+  footer .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  footer .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  footer .py-6 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  footer .flex {
+    display: flex;
+  }
+
+  footer .flex-col {
+    flex-direction: column;
+  }
+
+  footer .md\:flex-row {
+    flex-direction: row;
+  }
+
+  footer .justify-between {
+    justify-content: space-between;
+  }
+
+  footer .items-center {
+    align-items: center;
+  }
+
+  footer .gap-2 {
+    gap: 0.5rem;
+  }
+
+  footer .mb-4 {
+    margin-bottom: 1rem;
+  }
+
+  footer .md\:mb-0 {
+    margin-bottom: 0;
+  }
+
+  footer .h-6 {
+    height: 1.5rem;
+  }
+
+  footer .w-auto {
+    width: auto;
+  }
+
+  footer .text-gray-600 {
+    color: #4b5563;
+  }
+
+  footer .font-medium {
+    font-weight: 500;
+  }
+
+  footer .text-center {
+    text-align: center;
+  }
+
+  footer .md\:text-right {
+    text-align: right;
+  }
+
+  footer .text-sm {
+    font-size: 0.875rem;
+  }
+
+  footer .text-gray-500 {
+    color: #6b7280;
+  }
+
+  footer .text-xs {
+    font-size: 0.75rem;
+  }
+
+  footer .text-gray-400 {
+    color: #9ca3af;
+  }
+
+  footer .mt-1 {
+    margin-top: 0.25rem;
+  }
+
+  /* Responsive footer */
+  @media (min-width: 768px) {
+    footer .md\:flex-row {
+      flex-direction: row;
+    }
+
+    footer .md\:mb-0 {
+      margin-bottom: 0;
+    }
+
+    footer .md\:text-right {
+      text-align: right;
+    }
+  }
+}
+
+/* Toast notifications */
+#toast-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Utility classes */
+.hidden {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .sm\:inline {
+    display: inline;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:hidden {
+    display: none;
+  }
+
+  .md\:flex {
+    display: flex;
+  }
+}

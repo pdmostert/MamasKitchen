@@ -1,0 +1,437 @@
+/* Simple, organized CSS for Mama's Kitchen */
+
+/* CSS Variables */
+:root {
+  --primary-color: #000;
+  --background-color: #fff;
+  --text-color: #374151;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+
+  --breakfast-color: #ea580c;
+  --breakfast-bg: #fff7ed;
+  --breakfast-border: #fed7aa;
+
+  --lunch-color: #16a34a;
+  --lunch-bg: #f0fdf4;
+  --lunch-border: #bbf7d0;
+
+  --dinner-color: #2563eb;
+  --dinner-bg: #eff6ff;
+  --dinner-border: #bfdbfe;
+
+  --snack-color: #9333ea;
+  --snack-bg: #faf5ff;
+  --snack-border: #e9d5ff;
+}
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+/* Header styles */
+header {
+  background: #f8f9fa;
+  border-bottom: 2px solid #e9ecef;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 0;
+  margin: 0;
+}
+
+header .max-w-7xl {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+header .flex {
+  display: flex;
+}
+
+header .justify-between {
+  justify-content: space-between;
+}
+
+header .items-center {
+  align-items: center;
+}
+
+header .h-16 {
+  height: 4rem;
+}
+
+header .gap-3 {
+  gap: 0.75rem;
+}
+
+header .h-12 {
+  height: 3rem;
+}
+
+header .text-xl {
+  font-size: 1.25rem;
+}
+
+header .font-semibold {
+  font-weight: 600;
+}
+
+header .text-gray-900 {
+  color: #111827;
+}
+
+/* Navigation styles */
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+header nav button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid #dee2e6;
+  border-radius: 0.5rem;
+  background: white;
+  color: black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+  min-width: 110px;
+  justify-content: center;
+}
+
+header nav button.bg-black {
+  background: black !important;
+  color: white !important;
+  border-color: black !important;
+}
+
+/* Main content styles */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Footer styles */
+footer {
+  background: #f9fafb;
+  border-top: 2px solid #e9ecef;
+  margin-top: 2rem;
+  padding: 0;
+}
+
+footer .max-w-7xl {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+footer .py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+/* Meal Plan styles */
+.meal-plan {
+  margin-bottom: 2rem;
+}
+
+.meal-plan .title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-color);
+}
+
+/* Utility classes for footer */
+.flex {
+  display: flex !important;
+}
+
+.flex-col {
+  flex-direction: column !important;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.gap-2 {
+  gap: 0.5rem !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.mb-4 {
+  margin-bottom: 1rem !important;
+}
+
+.h-6 {
+  height: 1.5rem !important;
+}
+
+.w-auto {
+  width: auto !important;
+}
+
+.text-sm {
+  font-size: 0.875rem !important;
+}
+
+.text-xs {
+  font-size: 0.75rem !important;
+}
+
+.text-gray-600 {
+  color: #4b5563 !important;
+}
+
+.text-gray-500 {
+  color: #6b7280 !important;
+}
+
+.text-gray-400 {
+  color: #9ca3af !important;
+}
+
+.font-medium {
+  font-weight: 500 !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+.mt-8 {
+  margin-top: 2rem !important;
+}
+
+.px-4 {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+.py-6 {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+.bg-gray-50 {
+  background-color: #f9fafb !important;
+}
+
+.border-t {
+  border-top-width: 1px !important;
+}
+
+.border-gray-200 {
+  border-color: #e5e7eb !important;
+}
+
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.max-w-7xl {
+  max-width: 80rem !important;
+}
+
+/* Responsive utilities */
+@media (min-width: 640px) {
+  .sm\:px-6 {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:flex-row {
+    flex-direction: row !important;
+  }
+
+  .md\:mb-0 {
+    margin-bottom: 0 !important;
+  }
+
+  .md\:text-right {
+    text-align: right !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:px-8 {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+}
+
+.font-medium {
+  font-weight: 500 !important;
+}
+
+.text-sm {
+  font-size: 0.875rem !important;
+}
+
+.text-xs {
+  font-size: 0.75rem !important;
+}
+
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+/* Responsive classes */
+@media (min-width: 768px) {
+  .md\:flex-row {
+    flex-direction: row !important;
+  }
+
+  .md\:mb-0 {
+    margin-bottom: 0 !important;
+  }
+
+  .md\:text-right {
+    text-align: right !important;
+  }
+}
+
+/* Grid styles for meal plan */
+.grid {
+  display: grid !important;
+  grid-template-columns: auto repeat(7, 1fr) !important;
+  gap: 1rem !important;
+  align-items: start;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Day headers */
+.day-header {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-color);
+  padding: 0.75rem 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 0.5rem;
+}
+
+/* Meal type labels */
+.meal-type-label {
+  font-weight: 600;
+  color: var(--text-color);
+  padding: 1rem 0.5rem;
+  text-align: right;
+  align-self: center;
+}
+
+/* Meal slots */
+.meal-slot {
+  min-height: 120px;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 2px dashed #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #f9fafb;
+}
+
+.meal-slot:hover {
+  border-color: #9ca3af;
+  background: #f3f4f6;
+}
+
+/* Meal type specific colors */
+.meal-slot.breakfast {
+  background: var(--breakfast-bg);
+  border-color: var(--breakfast-border);
+  color: var(--breakfast-color);
+}
+
+.meal-slot.breakfast:hover {
+  border-color: var(--breakfast-color);
+  background: #ffedd5;
+}
+
+.meal-slot.lunch {
+  background: var(--lunch-bg);
+  border-color: var(--lunch-border);
+  color: var(--lunch-color);
+}
+
+.meal-slot.lunch:hover {
+  border-color: var(--lunch-color);
+  background: #dcfce7;
+}
+
+.meal-slot.dinner {
+  background: var(--dinner-bg);
+  border-color: var(--dinner-border);
+  color: var(--dinner-color);
+}
+
+.meal-slot.dinner:hover {
+  border-color: var(--dinner-color);
+  background: #dbeafe;
+}
+
+.meal-slot.snack {
+  background: var(--snack-bg);
+  border-color: var(--snack-border);
+  color: var(--snack-color);
+}
+
+.meal-slot.snack:hover {
+  border-color: var(--snack-color);
+  background: #f3e8ff;
+}
+
+/* Add meal text */
+.add-meal-text {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .meal-type-label {
+    text-align: center;
+    padding: 0.5rem;
+  }
+}

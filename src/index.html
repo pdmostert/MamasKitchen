@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mama's Kitchen - Meal Planner</title>
+    <link rel="stylesheet" href="./styles/simple-styles-fixed.css">
+</head>
+
+<body>
+    <!-- Header will be loaded here -->
+    <div id="header-container"></div>
+
+    <!-- Main content -->
+    <div id="app"></div>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <!-- Toast container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
+
+    <!-- Scripts -->
+    <script src="./js/partials.js" type="module"></script>
+    <script src="./js/navigation.js" type="module"></script>
+    <script src="./js/main-simple.js" type="module"></script>
+
+    <!-- Load partials when page loads -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Load header and footer partials
+            await window.partialLoader.loadPartials([
+                { elementId: 'header-container', path: '/partials/header.html' },
+                { elementId: 'footer-container', path: '/partials/footer.html' }
+            ]);
+        });
+    </script>
+
+</body>
+
+</html>

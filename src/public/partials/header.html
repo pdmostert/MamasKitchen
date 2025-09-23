@@ -1,0 +1,48 @@
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <img src="https://images.unsplash.com/photo-1642864071681-e25dfd8e565f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxraXRjaGVuJTIwY29va2luZyUyMGxvZ28lMjBjaGVmJTIwaGF0fGVufDF8fHx8MTc1ODUxNzYxMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    alt="Mama's Kitchen Logo" class="h-12 w-auto" width="48" height="48" />
+                <h1 class="text-xl font-semibold text-gray-900">Mama's Kitchen</h1>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-2" id="desktop-navigation">
+                <button data-view="meal-plan"
+                    class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors bg-black text-white">
+                    <span class="text-sm">📅</span>
+                    <span class="hidden sm:inline">Meal Plan</span>
+                </button>
+                <button data-view="search"
+                    class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors text-gray-700 hover:bg-gray-100">
+                    <span class="text-sm">🔍</span>
+                    <span class="hidden sm:inline">Search</span>
+                </button>
+                <button data-view="favorites"
+                    class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors text-gray-700 hover:bg-gray-100">
+                    <span class="text-sm">❤️</span>
+                    <span class="hidden sm:inline">Favorites</span>
+                </button>
+                <button data-view="shopping"
+                    class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors text-gray-700 hover:bg-gray-100">
+                    <span class="text-sm">🛒</span>
+                    <span class="hidden sm:inline">Shopping</span>
+                </button>
+                <button data-view="nutrition"
+                    class="flex items-center gap-2 px-3 py-2 rounded-md transition-colors text-gray-700 hover:bg-gray-100">
+                    <span class="text-sm">📊</span>
+                    <span class="hidden sm:inline">Nutrition</span>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button class="p-2 rounded-md hover:bg-gray-100" id="mobile-menu-button">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
