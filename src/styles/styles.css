@@ -200,52 +200,7 @@ html {
   margin-bottom: 2rem;
 }
 
-/* Tabs removed - now showing all meal types as rows */
-/*
-.meal-plan-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #e5e7eb;
-}
 
-.meal-plan-tab {
-  padding: 0.75rem 1.5rem;
-  background: none;
-  border: none;
-  font-weight: 500;
-  color: #6b7280;
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: all 0.2s;
-}
-
-.meal-plan-tab.active {
-  color: #1f2937;
-  border-bottom-color: currentColor;
-}
-
-.meal-plan-tab.breakfast.active {
-  color: #ea580c;
-  border-bottom-color: #ea580c;
-}
-
-.meal-plan-tab.lunch.active {
-  color: #16a34a;
-  border-bottom-color: #16a34a;
-}
-
-.meal-plan-tab.dinner.active {
-  color: #2563eb;
-  border-bottom-color: #2563eb;
-}
-
-.meal-plan-tab.snack.active {
-  color: #9333ea;
-  border-bottom-color: #9333ea;
-}
-*/
 
 .meal-plan-grid {
   display: grid;
@@ -424,8 +379,8 @@ html {
 
 /* Header & navigation */
 .site-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background: #00000015;
+  border-bottom: 1px solid #00000038;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -513,8 +468,8 @@ html {
 
 /* Footer */
 .site-footer {
-  background: #f9fafb;
-  border-top: 1px solid #e5e7eb;
+  background: #00000017;
+  border-top: 1px solid #00000038;
 }
 .site-footer-inner {
   max-width: 1200px;
