@@ -12,8 +12,8 @@ export const storage = {
   setFavorites: (favorites) => {
     try {
       localStorage.setItem("mealPlannerFavorites", JSON.stringify(favorites));
-    } catch (error) {
-      console.error("Failed to save favorites:", error);
+    } catch (_error) {
+      // ignore storage write errors in browsers where storage may be disabled
     }
   },
 
@@ -29,8 +29,8 @@ export const storage = {
   setMealPlan: (mealPlan) => {
     try {
       localStorage.setItem("mealPlannerMealPlan", JSON.stringify(mealPlan));
-    } catch (error) {
-      console.error("Failed to save meal plan:", error);
+    } catch (_error) {
+      // ignore storage write errors
     }
   },
 };
@@ -39,24 +39,24 @@ export const storage = {
 export function showToast(message, type = "success") {
   const toastContainer = document.getElementById("toast-container");
 
-  const toast = document.createElement("div");
-  toast.className = `toast ${type === "success" ? "toast-success" : type === "error" ? "toast-error" : "toast-info"}`;
+  const toastEl = document.createElement("div");
+  toastEl.className = `toast ${type === "success" ? "toast-success" : type === "error" ? "toast-error" : "toast-info"}`;
 
-  toast.textContent = message;
-  toastContainer.appendChild(toast);
+  toastEl.textContent = message;
+  toastContainer.appendChild(toastEl);
 
   // Animate in
   setTimeout(() => {
-    toast.classList.add("toast-enter");
+    toastEl.classList.add("toast-enter");
   }, 10);
 
   // Auto remove after 3 seconds
   setTimeout(() => {
-    toast.classList.remove("toast-enter");
-    toast.classList.add("toast-exit");
+    toastEl.classList.remove("toast-enter");
+    toastEl.classList.add("toast-exit");
     setTimeout(() => {
-      if (toast.parentNode) {
-        toast.parentNode.removeChild(toast);
+      if (toastEl.parentNode) {
+        toastEl.parentNode.removeChild(toastEl);
       }
     }, 300);
   }, 3000);

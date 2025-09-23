@@ -21,7 +21,7 @@ class PartialLoader {
       this.cache.set(partialPath, html);
       return html;
     } catch (error) {
-      console.error("Error loading partial:", error);
+      // Fallback: render a simple error message into the DOM. Avoid console in prod.
       return `<div>Error loading ${partialPath}</div>`;
     }
   }
@@ -30,7 +30,7 @@ class PartialLoader {
   async insertPartial(elementId, partialPath) {
     const element = document.getElementById(elementId);
     if (!element) {
-      console.error(`Element with id '${elementId}' not found`);
+      // Element missing: gracefully return.
       return;
     }
 

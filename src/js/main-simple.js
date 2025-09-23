@@ -1,5 +1,4 @@
 // Simple main application file
-import { mockRecipes } from "./mockRecipes.js";
 import { storage } from "./utils.js";
 import { toast } from "./utils.js";
 import { createMealPlan } from "./mealPlan.mjs";
@@ -153,6 +152,9 @@ function saveData() {
   storage.setFavorites(app.favorites);
   storage.setMealPlan(app.mealPlan);
 }
+
+// Ensure data is saved when the user leaves the page
+window.addEventListener("beforeunload", saveData);
 
 // Start the app when page loads
 document.addEventListener("DOMContentLoaded", () => {

@@ -15,7 +15,7 @@ src/
 │   ├── utils.js             # Utility functions
 │   └── mockRecipes.js       # Sample recipe data
 ├── styles/
-│   └── simple-styles.css    # Nested CSS with CSS variables
+│   └── styles.css           # Canonical stylesheet (consolidated)
 └── public/
     └── partials/
         ├── header.html      # Header partial
@@ -84,7 +84,7 @@ await window.partialLoader.loadPartials([
 - **`partials.js`** - Loads HTML partials into containers
 - **`navigation.js`** - Handles navigation between views
 - **`main-simple.js`** - Main app logic, simplified for beginners
-- **`simple-styles.css`** - Clean, nested CSS with variables
+- **`styles.css`** - Canonical stylesheet (consolidated)
 - **`header.html`** - Static header with navigation
 - **`footer.html`** - Simple footer
 
@@ -92,7 +92,7 @@ await window.partialLoader.loadPartials([
 
 ### Colors
 
-Edit the CSS variables in `simple-styles.css`:
+Edit the CSS variables in `styles/styles.css`:
 
 ```css
 :root {
@@ -140,7 +140,8 @@ The CSS uses nested syntax for better organization:
 3. **Make changes:**
    - Edit HTML partials in `public/partials/`
    - Modify JavaScript in `js/` files
-   - Update styles in `simple-styles.css`
+
+- Update styles in `styles/styles.css`
 
 ## 🎓 Learning Points
 
