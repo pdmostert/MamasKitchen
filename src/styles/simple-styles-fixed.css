@@ -164,61 +164,224 @@ footer .py-6 {
   color: var(--text-color);
 }
 
-/* Utility classes for footer */
-.flex {
-  display: flex !important;
-}
-
-.flex-col {
-  flex-direction: column !important;
-}
-
-.justify-between {
-  justify-content: space-between !important;
-}
-
-.items-center {
-  align-items: center !important;
-}
-
-.gap-2 {
-  gap: 0.5rem !important;
-}
-
-.text-center {
-  text-align: center !important;
-}
-
-.mb-4 {
-  margin-bottom: 1rem !important;
-}
-
-.h-6 {
-  height: 1.5rem !important;
-}
-
-.w-auto {
-  width: auto !important;
-}
-
-.text-sm {
-  font-size: 0.875rem !important;
-}
-
-.text-xs {
-  font-size: 0.75rem !important;
-}
-
-.text-gray-600 {
-  color: #4b5563 !important;
-}
-
-.text-gray-500 {
-  color: #6b7280 !important;
-}
-
 .text-gray-400 {
   color: #9ca3af !important;
+}
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.site-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-logo {
+  height: 48px;
+  width: auto;
+}
+
+.brand-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e6e7eb;
+  background: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.nav-btn.primary {
+  background: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}
+
+.nav-icon {
+  font-size: 0.95rem;
+}
+
+.nav-label {
+  display: inline-block;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-menu {
+    display: block;
+  }
+  .nav-label {
+    display: none;
+  }
+}
+
+/* Navigation active/inactive states (replaces utility classes) */
+.nav-active {
+  background: var(--primary-color) !important;
+  color: #fff !important;
+  border-color: var(--primary-color) !important;
+}
+
+.nav-inactive {
+  background: transparent !important;
+  color: var(--text-color) !important;
+}
+
+.nav-inactive:hover {
+  background: #f3f4f6 !important;
+}
+
+/* Semantic footer classes */
+.site-footer {
+  background: #f9fafb;
+  border-top: 1px solid var(--border-color);
+}
+
+.site-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-logo {
+  height: 24px;
+  width: auto;
+}
+
+.footer-title {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.footer-copy {
+  text-align: right;
+}
+
+.footer-note {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer-subnote {
+  color: #9ca3af;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 640px) {
+  .site-footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-copy {
+    text-align: center;
+  }
+}
+
+/* Toast notifications container */
+.toast-container {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+/* Toast styles */
+.toast {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateX(120%);
+  transition:
+    transform 300ms ease,
+    opacity 300ms ease;
+  opacity: 1;
+}
+
+.toast-enter {
+  transform: translateX(0%);
+}
+.toast-exit {
+  transform: translateX(120%);
+  opacity: 0;
+}
+
+.toast-success {
+  background: #059669;
+}
+.toast-error {
+  background: #dc2626;
+}
+.toast-info {
+  background: #2563eb;
+}
+
+/* Page layout helpers to replace inline utility classes */
+.page-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 1.25rem;
+}
+
+.muted {
+  color: var(--text-muted);
 }
 
 .font-medium {
@@ -231,97 +394,6 @@ footer .py-6 {
 
 .mt-8 {
   margin-top: 2rem !important;
-}
-
-.px-4 {
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
-}
-
-.py-6 {
-  padding-top: 1.5rem !important;
-  padding-bottom: 1.5rem !important;
-}
-
-.bg-gray-50 {
-  background-color: #f9fafb !important;
-}
-
-.border-t {
-  border-top-width: 1px !important;
-}
-
-.border-gray-200 {
-  border-color: #e5e7eb !important;
-}
-
-.mx-auto {
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-.max-w-7xl {
-  max-width: 80rem !important;
-}
-
-/* Responsive utilities */
-@media (min-width: 640px) {
-  .sm\:px-6 {
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
-  }
-}
-
-@media (min-width: 768px) {
-  .md\:flex-row {
-    flex-direction: row !important;
-  }
-
-  .md\:mb-0 {
-    margin-bottom: 0 !important;
-  }
-
-  .md\:text-right {
-    text-align: right !important;
-  }
-}
-
-@media (min-width: 1024px) {
-  .lg\:px-8 {
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
-  }
-}
-
-.font-medium {
-  font-weight: 500 !important;
-}
-
-.text-sm {
-  font-size: 0.875rem !important;
-}
-
-.text-xs {
-  font-size: 0.75rem !important;
-}
-
-.mt-1 {
-  margin-top: 0.25rem !important;
-}
-
-/* Responsive classes */
-@media (min-width: 768px) {
-  .md\:flex-row {
-    flex-direction: row !important;
-  }
-
-  .md\:mb-0 {
-    margin-bottom: 0 !important;
-  }
-
-  .md\:text-right {
-    text-align: right !important;
-  }
 }
 
 /* Grid styles for meal plan */

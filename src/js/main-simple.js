@@ -59,7 +59,7 @@ function showMealPlan() {
 
   // Create main content container
   const main = document.createElement("main");
-  main.className = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8";
+  main.className = "page-main";
 
   // Create the meal plan component
   const mealPlan = createMealPlan(
@@ -78,9 +78,9 @@ function showMealPlan() {
 function showSearch() {
   const appContainer = document.getElementById("app");
   appContainer.innerHTML = `
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Search Recipes</h2>
-      <p class="text-gray-600">Search functionality coming soon!</p>
+    <main class="page-main">
+      <h2 class="page-title">Search Recipes</h2>
+      <p class="muted">Search functionality coming soon!</p>
     </main>
   `;
 }
@@ -89,9 +89,9 @@ function showSearch() {
 function showFavorites() {
   const appContainer = document.getElementById("app");
   appContainer.innerHTML = `
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Favorite Recipes</h2>
-      <p class="text-gray-600">Favorites functionality coming soon!</p>
+    <main class="page-main">
+      <h2 class="page-title">Favorite Recipes</h2>
+      <p class="muted">Favorites functionality coming soon!</p>
     </main>
   `;
 }
@@ -100,9 +100,9 @@ function showFavorites() {
 function showShopping() {
   const appContainer = document.getElementById("app");
   appContainer.innerHTML = `
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Shopping List</h2>
-      <p class="text-gray-600">Shopping list functionality coming soon!</p>
+    <main class="page-main">
+      <h2 class="page-title">Shopping List</h2>
+      <p class="muted">Shopping list functionality coming soon!</p>
     </main>
   `;
 }
@@ -111,9 +111,9 @@ function showShopping() {
 function showNutrition() {
   const appContainer = document.getElementById("app");
   appContainer.innerHTML = `
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Nutrition Info</h2>
-      <p class="text-gray-600">Nutrition functionality coming soon!</p>
+    <main class="page-main">
+      <h2 class="page-title">Nutrition Info</h2>
+      <p class="muted">Nutrition functionality coming soon!</p>
     </main>
   `;
 }

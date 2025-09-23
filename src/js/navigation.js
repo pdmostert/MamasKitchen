@@ -53,11 +53,11 @@ class SimpleNavigation {
       const isActive = button.dataset.view === this.currentView;
 
       if (isActive) {
-        button.classList.remove("text-gray-700", "hover:bg-gray-100");
-        button.classList.add("bg-black", "text-white");
+        button.classList.remove("nav-inactive");
+        button.classList.add("nav-active");
       } else {
-        button.classList.remove("bg-black", "text-white");
-        button.classList.add("text-gray-700", "hover:bg-gray-100");
+        button.classList.remove("nav-active");
+        button.classList.add("nav-inactive");
       }
     });
   }
