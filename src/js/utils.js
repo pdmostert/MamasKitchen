@@ -1,3 +1,33 @@
+// Utility functions for loading templates, managing localStorage, and showing toasts
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
+// Load an HTML template from a file
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if (callback) {
+    callback(data);
+  }
+}
+
+// Load Partials
+export async function loadHeaderFooter() {
+  const headerTemplate = await loadTemplate("../partials/header.html");
+  const footerTemplate = await loadTemplate("../partials/footer.html");
+
+  const headerElement = document.querySelector("#site-header");
+  const footerElement = document.querySelector("#site-footer");
+  renderWithTemplate(headerTemplate, headerElement);
+  renderWithTemplate(footerTemplate, footerElement);
+  // Navigation initialization is intentionally not forced here.
+  // Pages that want extra JS-driven nav behavior (mobile menu, active state)
+  // can include or import `./navigation.js` themselves.
+}
+
 // LocalStorage utilities
 export const storage = {
   getFavorites: () => {
