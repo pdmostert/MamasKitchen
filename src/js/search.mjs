@@ -1,4 +1,4 @@
-import { showModal, showRecipeDetailsModal } from "./utils.js";
+import { showModal, showRecipeDetailsModal, storage } from "./utils.js";
 import { getAllRecipes } from "./recipeService.js";
 export class SearchView {
   constructor(
@@ -97,8 +97,9 @@ export class SearchView {
       ? "♥ Favorites"
       : "♡ Favorite";
     favBtn.addEventListener("click", () => {
-      if (this.favoritesSet.has(recipe.id)) {
-        this.favoritesSet.delete(recipe.id);
+      let favorites = storage.getFavorites() || [];
+      if (favorites.some((fav) => fav.id === recipe.id)) {
+        favorites = favorites.filter((fav) => fav.id !== recipe.id);
         favBtn.className = "favorite-btn favorite-inactive";
         favBtn.setAttribute("aria-label", "Add to favorites");
         favBtn.innerHTML = "♡ Favorite";
@@ -106,7 +107,7 @@ export class SearchView {
           window.toast.info(`Removed ${recipe.title} from favorites`);
         }
       } else {
-        this.favoritesSet.add(recipe.id);
+        favorites.push(recipe);
         favBtn.className = "favorite-btn favorite-active";
         favBtn.setAttribute("aria-label", "Remove from favorites");
         favBtn.innerHTML = "♥ Favorites";
@@ -114,11 +115,7 @@ export class SearchView {
           window.toast.success(`Added ${recipe.title} to favorites`);
         }
       }
-      // Persist favorites to localStorage
-      localStorage.setItem(
-        "mealPlannerFavorites",
-        JSON.stringify(Array.from(this.favoritesSet))
-      );
+      storage.setFavorites(favorites);
       this.handlers.onToggleFavorite(recipe);
     });
 

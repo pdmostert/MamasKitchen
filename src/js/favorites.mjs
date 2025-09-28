@@ -94,19 +94,15 @@ export default class FavoritesView {
   }
 
   removeFavorite(id) {
-    this.favorites = this.favorites.filter((favId) => favId !== id);
-    storage.setFavorites(this.favorites);
-    this.favoriteRecipes = getAllRecipes().filter((r) =>
-      this.favorites.includes(String(r.id))
+    this.favoriteRecipes = this.favoriteRecipes.filter(
+      (r) => String(r.id) !== String(id)
     );
+    storage.setFavorites(this.favoriteRecipes);
     this.render();
   }
   constructor(containerId = "main") {
     this.container = document.getElementById(containerId);
-    this.favorites = storage.getFavorites() || [];
-    this.favoriteRecipes = getAllRecipes().filter((r) =>
-      this.favorites.includes(String(r.id))
-    );
+    this.favoriteRecipes = storage.getFavorites() || [];
   }
 
   async render() {
