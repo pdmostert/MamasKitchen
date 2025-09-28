@@ -1,4 +1,4 @@
-import { loadHeaderFooter } from "./utils.js";
+import { loadHeaderFooter, storage } from "./utils.js";
 import { SearchView } from "./search.mjs";
 import { mockRecipes } from "./mockRecipes.js";
 
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alert(`Toggle favorite: ${recipe.title}`);
     },
   };
-  const favorites = [];
+  const favorites = storage.getFavorites() || [];
   const searchView = new SearchView("main", recipes, handlers, favorites);
   searchView.render();
 });

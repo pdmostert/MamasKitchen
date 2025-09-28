@@ -14,17 +14,24 @@ export function showRecipeDetailsModal(recipe) {
       <div><b>Instructions:</b><br>${recipe.instructions ? `<p>${recipe.instructions}</p>` : "<em>No instructions provided.</em>"}</div>
     </div>
   `;
+  // Pass a custom class for wider modal
   return showModal({
     title: "Recipe Details",
     content: detailsHtml,
     onClose: null,
+    modalClass: "recipe-details-modal",
   });
 }
 /**
  * Shows a modal dialog with the given HTML content and optional title.
  * Returns a function to close the modal.
  */
-export function showModal({ title = "", content = "", onClose = null }) {
+export function showModal({
+  title = "",
+  content = "",
+  onClose = null,
+  modalClass = "",
+}) {
   // Remove any existing modal
   const existing = document.getElementById("global-modal");
   if (existing) existing.remove();
@@ -36,7 +43,7 @@ export function showModal({ title = "", content = "", onClose = null }) {
 
   // Modal box
   const modal = document.createElement("div");
-  modal.className = "modal-box";
+  modal.className = "modal-box" + (modalClass ? ` ${modalClass}` : "");
 
   // Title (optional)
   if (title) {

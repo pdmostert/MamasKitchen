@@ -10,7 +10,7 @@ export class SearchView {
     this.container = document.getElementById(containerId);
     this.recipes = recipes[0];
     this.handlers = handlers;
-    this.favoritesSet = new Set(favorites);
+    this.favoritesArr = Array.isArray(favorites) ? favorites : [];
   }
 
   showRecipeDetailsModal(recipe) {
@@ -82,20 +82,14 @@ export class SearchView {
     addBtn.addEventListener("click", () => this.showAddToPlanModal(recipe));
 
     const favBtn = document.createElement("button");
+  const isFavorite = this.favoritesArr.some((fav) => fav && typeof fav === 'object' && 'id' in fav && fav.id === recipe.id);
     favBtn.className =
-      "favorite-btn " +
-      (this.favoritesSet.has(recipe.id)
-        ? "favorite-active"
-        : "favorite-inactive");
+      "favorite-btn " + (isFavorite ? "favorite-active" : "favorite-inactive");
     favBtn.setAttribute(
       "aria-label",
-      this.favoritesSet.has(recipe.id)
-        ? "Remove from favorites"
-        : "Add to favorites"
+      isFavorite ? "Remove from favorites" : "Add to favorites"
     );
-    favBtn.innerHTML = this.favoritesSet.has(recipe.id)
-      ? "♥ Favorites"
-      : "♡ Favorite";
+    favBtn.innerHTML = isFavorite ? "♥ Favorites" : "♡ Favorite";
     favBtn.addEventListener("click", () => {
       let favorites = storage.getFavorites() || [];
       if (favorites.some((fav) => fav.id === recipe.id)) {
@@ -116,6 +110,7 @@ export class SearchView {
         }
       }
       storage.setFavorites(favorites);
+      this.favoritesArr = favorites;
       this.handlers.onToggleFavorite(recipe);
     });
 
@@ -154,6 +149,7 @@ export class SearchView {
       title: "Add to Meal Plan",
       content: formHtml,
       onClose: null,
+      modalClass: "add-to-plan-modal",
     });
     // Attach event handler for Add to Plan button after modal is rendered
     setTimeout(() => {
@@ -248,7 +244,7 @@ export class SearchView {
   }
 
   updateFavorites(newFavs) {
-    this.favoritesSet = new Set(newFavs || []);
+    this.favoritesArr = Array.isArray(newFavs) ? newFavs : [];
     this.renderList(this.recipes);
   }
 }
