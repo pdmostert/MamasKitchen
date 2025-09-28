@@ -8,9 +8,6 @@
   cursor: pointer;
   background: #f3f4f6;
   color: #9333ea;
-  transition:
-    background 0.2s,
-    color 0.2s;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -448,20 +445,19 @@ html {
   background: transparent;
   color: #374151;
   cursor: pointer;
+  text-decoration: none;
 }
-.nav-btn.primary {
+
+.nav-active {
   background: #000;
   color: #fff;
   border-color: #000;
 }
-.nav-active {
-  background: #000 !important;
-  color: #fff !important;
-  border-color: #000 !important;
-}
 .nav-inactive {
   background: transparent !important;
   color: #374151 !important;
+  border: 1px solid transparent;
+  border-color: #000 !important;
 }
 .nav-inactive:hover {
   background: #f3f4f6 !important;

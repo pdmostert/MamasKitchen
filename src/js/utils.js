@@ -99,16 +99,18 @@ export async function loadHeaderFooter() {
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
 
-  // Highlight active nav link by moving 'primary' class
+  // Highlight active nav link by moving 'nav-active' class
   // Run after header is rendered
   const navLinks = headerElement.querySelectorAll(".desktop-nav a");
   const currentPath = location.pathname.replace(/\/index\.html$/, "/");
   navLinks.forEach((link) => {
     let linkPath = link.getAttribute("href").replace(/\/index\.html$/, "/");
     if (linkPath === currentPath) {
-      link.classList.add("primary");
+      link.classList.add("nav-active");
+      link.classList.remove("nav-inactive");
     } else {
-      link.classList.remove("primary");
+      link.classList.remove("nav-active");
+      link.classList.add("nav-inactive");
     }
   });
 }

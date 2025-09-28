@@ -2,7 +2,7 @@ import { loadHeaderFooter } from "./utils.js";
 
 async function init() {
   await loadHeaderFooter();
-  const container = document.getElementById("app");
+  const container = document.getElementById("main");
   container.innerHTML = "";
 
   const main = document.createElement("main");

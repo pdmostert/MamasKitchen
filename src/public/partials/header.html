@@ -6,23 +6,23 @@
     </div>
 
     <nav id="desktop-navigation" class="desktop-nav">
-        <a href="/index.html" class="nav-btn primary">
+        <a href="/index.html" class="nav-btn nav-active">
             <span class="nav-icon">📅</span>
             <span class="nav-label">Meal Plan</span>
         </a>
-        <a href="/search/index.html" class="nav-btn">
+        <a href="/search/index.html" class="nav-btn nav-inactive">
             <span class="nav-icon">🔍</span>
             <span class="nav-label">Search</span>
         </a>
-        <a href="/favorites/index.html" class="nav-btn">
+        <a href="/favorites/index.html" class="nav-btn nav-inactive">
             <span class="nav-icon">❤️</span>
             <span class="nav-label">Favorites</span>
         </a>
-        <a href="/shopping/index.html" class="nav-btn">
+        <a href="/shopping/index.html" class="nav-btn nav-inactive">
             <span class="nav-icon">🛒</span>
             <span class="nav-label">Shopping</span>
         </a>
-        <a href="/nutrition/index.html" class="nav-btn">
+        <a href="/nutrition/index.html" class="nav-btn nav-inactive">
             <span class="nav-icon">📊</span>
             <span class="nav-label">Nutrition</span>
         </a>
@@ -31,21 +31,4 @@
     <div class="mobile-menu">
         <button id="mobile-menu-button" class="mobile-menu-button">☰</button>
     </div>
-</div>
-<script>
-    // Highlight active nav link by moving 'primary' class
-    document.addEventListener('DOMContentLoaded', function () {
-        const navLinks = document.querySelectorAll('.desktop-nav a');
-        const currentPath = location.pathname.replace(/\/index\.html$/, '/');
-        navLinks.forEach(link => {
-            // Normalize link href for comparison
-            let linkPath = link.getAttribute('href').replace(/\/index\.html$/, '/');
-            if (linkPath === currentPath) {
-                link.classList.add('primary');
-            } else {
-                link.classList.remove('primary');
-            }
-        });
-    });
-</script>
 </div>
