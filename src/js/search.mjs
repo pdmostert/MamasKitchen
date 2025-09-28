@@ -1,5 +1,3 @@
-import { loadHeaderFooter } from "./utils.js";
-
 export class SearchView {
   constructor(
     containerId = "main",
@@ -69,7 +67,7 @@ export class SearchView {
     const addBtn = document.createElement("button");
     addBtn.className = "nav-btn primary";
     addBtn.textContent = "Add to Plan";
-    addBtn.addEventListener("click", () => this.handlers.onAddToPlan(recipe));
+    addBtn.addEventListener("click", () => this.showAddToPlanModal(recipe));
 
     const favBtn = document.createElement("button");
     favBtn.className = "nav-btn nav-inactive";
@@ -100,6 +98,118 @@ export class SearchView {
     article.appendChild(body);
 
     return article;
+  }
+
+  showAddToPlanModal(recipe) {
+    // Remove any existing modal
+    const existing = document.getElementById("add-to-plan-modal");
+    if (existing) existing.remove();
+
+    // Modal overlay
+    const overlay = document.createElement("div");
+    overlay.id = "add-to-plan-modal";
+    overlay.className = "modal-overlay";
+
+    // Modal box
+    const modal = document.createElement("div");
+    modal.className = "modal-box";
+
+    // Title
+    const title = document.createElement("h2");
+    title.className = "modal-title";
+    title.textContent = "Add to Meal Plan";
+    modal.appendChild(title);
+
+    // Recipe info
+    const recipeInfo = document.createElement("div");
+    recipeInfo.className = "modal-recipe-info";
+    recipeInfo.innerHTML = `<strong>Recipe</strong><br>${recipe.title}`;
+    modal.appendChild(recipeInfo);
+
+    // Day select
+    const dayLabel = document.createElement("label");
+    dayLabel.textContent = "Day";
+    dayLabel.htmlFor = "modal-day-select";
+    dayLabel.className = "modal-label";
+    modal.appendChild(dayLabel);
+    const daySelect = document.createElement("select");
+    daySelect.id = "modal-day-select";
+    daySelect.className = "modal-select";
+    daySelect.innerHTML =
+      `<option value="">Select a day</option>` +
+      [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ]
+        .map((d) => `<option value="${d}">${d}</option>`)
+        .join("");
+    modal.appendChild(daySelect);
+
+    // Meal type select
+    const mealTypeLabel = document.createElement("label");
+    mealTypeLabel.textContent = "Meal Type";
+    mealTypeLabel.htmlFor = "modal-mealtype-select";
+    mealTypeLabel.className = "modal-label";
+    modal.appendChild(mealTypeLabel);
+    const mealTypeSelect = document.createElement("select");
+    mealTypeSelect.id = "modal-mealtype-select";
+    mealTypeSelect.className = "modal-select";
+    mealTypeSelect.innerHTML =
+      `<option value="">Select meal type</option>` +
+      ["breakfast", "lunch", "dinner", "snack"]
+        .map(
+          (t) =>
+            `<option value="${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</option>`
+        )
+        .join("");
+    modal.appendChild(mealTypeSelect);
+
+    // Button row
+    const btnRow = document.createElement("div");
+    btnRow.className = "modal-btn-row";
+    const cancelBtn = document.createElement("button");
+    cancelBtn.className = "modal-btn modal-cancel";
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.onclick = () => overlay.remove();
+    btnRow.appendChild(cancelBtn);
+    const addBtn = document.createElement("button");
+    addBtn.className = "modal-btn modal-confirm";
+    addBtn.textContent = "Add to Plan";
+    addBtn.onclick = () => {
+      const day = daySelect.value;
+      const mealType = mealTypeSelect.value;
+      if (!day || !mealType) {
+        alert("Please select both day and meal type.");
+        return;
+      }
+      // Get current meal plan
+      let mealPlan = {};
+      try {
+        mealPlan =
+          JSON.parse(localStorage.getItem("mealPlannerMealPlan")) || {};
+      } catch {
+        mealPlan = {};
+      }
+      if (!mealPlan[day]) mealPlan[day] = {};
+      mealPlan[day][mealType] = recipe;
+      localStorage.setItem("mealPlannerMealPlan", JSON.stringify(mealPlan));
+      overlay.remove();
+      // Show toast if available
+      if (window.toast && typeof window.toast.success === "function") {
+        window.toast.success(`Added ${recipe.title} to ${day} ${mealType}`);
+      } else {
+        alert(`Added ${recipe.title} to ${day} ${mealType}`);
+      }
+    };
+    btnRow.appendChild(addBtn);
+    modal.appendChild(btnRow);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
   }
 
   renderList(recipes) {
