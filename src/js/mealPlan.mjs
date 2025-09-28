@@ -153,7 +153,26 @@ export default class MealPlan {
   }
 
   viewRecipeDetails(recipe) {
-    showRecipeDetailsModal(recipe);
+    // Adapt recipe for modal: Spoonacular fields
+    const tags = [
+      ...(recipe.dishTypes || []),
+      ...(recipe.diets || []),
+      ...(recipe.cuisines || []),
+    ];
+    const ingredients = (recipe.extendedIngredients || []).map((ing) => ({
+      name: ing.nameClean || ing.name || ing.original,
+      amount: ing.amount ? `${ing.amount} ${ing.unit}` : undefined,
+    }));
+    showRecipeDetailsModal({
+      ...recipe,
+      cookTime: recipe.readyInMinutes,
+      tags,
+      ingredients,
+      instructions:
+        recipe.instructions ||
+        recipe.analyzedInstructions?.[0]?.steps?.map((s) => s.step).join(" ") ||
+        "",
+    });
   }
 
   render() {

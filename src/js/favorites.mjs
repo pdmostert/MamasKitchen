@@ -1,5 +1,5 @@
 import { storage, loadHeaderFooter } from "./utils.js";
-import { mockRecipes } from "./mockRecipes.js";
+import { getAllRecipes } from "./recipeService.js";
 import { SearchView } from "./search.mjs";
 
 export default class FavoritesView {
@@ -28,21 +28,36 @@ export default class FavoritesView {
     const meta = document.createElement("div");
     meta.className = "recipe-meta";
     meta.innerHTML = `
-      <span class="muted">${recipe.cookTime}m</span>
+      <span class="muted">${recipe.readyInMinutes}m</span>
       &nbsp;•&nbsp;
       <span class="muted">${recipe.servings}p</span>
-      &nbsp;•&nbsp;
-      <span class="muted">${recipe.difficulty}</span>
     `;
 
     const tagsRow = document.createElement("div");
     tagsRow.className = "recipe-tags";
-    (recipe.tags || []).forEach((t) => {
+    const tags = [
+      ...(recipe.diets || []),
+      ...(recipe.dishTypes || []),
+      ...(recipe.cuisines || []),
+    ];
+    tags.forEach((t) => {
       const span = document.createElement("span");
       span.className = "tag muted";
       span.textContent = t;
       tagsRow.appendChild(span);
     });
+
+    // Ingredients preview (first 3)
+    const ingRow = document.createElement("div");
+    ingRow.className = "recipe-meta";
+    if (Array.isArray(recipe.extendedIngredients)) {
+      ingRow.innerHTML =
+        `<b>Ingredients:</b> ` +
+        recipe.extendedIngredients
+          .slice(0, 3)
+          .map((ing) => `${ing.name} (${ing.amount} ${ing.unit})`)
+          .join(", ");
+    }
 
     const actions = document.createElement("div");
     actions.className = "recipe-actions";
@@ -69,6 +84,7 @@ export default class FavoritesView {
     body.appendChild(header);
     body.appendChild(meta);
     body.appendChild(tagsRow);
+    if (ingRow.innerHTML) body.appendChild(ingRow);
     body.appendChild(actions);
 
     article.appendChild(imgWrap);
@@ -80,16 +96,16 @@ export default class FavoritesView {
   removeFavorite(id) {
     this.favorites = this.favorites.filter((favId) => favId !== id);
     storage.setFavorites(this.favorites);
-    this.favoriteRecipes = mockRecipes.filter((r) =>
-      this.favorites.includes(r.id)
+    this.favoriteRecipes = getAllRecipes().filter((r) =>
+      this.favorites.includes(String(r.id))
     );
     this.render();
   }
   constructor(containerId = "main") {
     this.container = document.getElementById(containerId);
     this.favorites = storage.getFavorites() || [];
-    this.favoriteRecipes = mockRecipes.filter((r) =>
-      this.favorites.includes(r.id)
+    this.favoriteRecipes = getAllRecipes().filter((r) =>
+      this.favorites.includes(String(r.id))
     );
   }
 

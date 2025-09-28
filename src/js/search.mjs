@@ -1,13 +1,14 @@
 import { showModal, showRecipeDetailsModal } from "./utils.js";
+import { getAllRecipes } from "./recipeService.js";
 export class SearchView {
   constructor(
     containerId = "main",
-    recipes = [],
+    recipes = getAllRecipes(),
     handlers = {},
     favorites = []
   ) {
     this.container = document.getElementById(containerId);
-    this.recipes = recipes;
+    this.recipes = recipes[0];
     this.handlers = handlers;
     this.favoritesSet = new Set(favorites);
   }
@@ -48,16 +49,20 @@ export class SearchView {
     const meta = document.createElement("div");
     meta.className = "recipe-meta";
     meta.innerHTML = `
-      <span class="muted">${recipe.cookTime}m</span>
+      <span class="muted">${recipe.readyInMinutes}m</span>
       &nbsp;•&nbsp;
       <span class="muted">${recipe.servings}p</span>
-      &nbsp;•&nbsp;
-      <span class="muted">${recipe.difficulty}</span>
     `;
 
     const tagsRow = document.createElement("div");
     tagsRow.className = "recipe-tags";
-    (recipe.tags || []).forEach((t) => {
+    // Spoonacular: use diets, dishTypes, cuisines as tags
+    const tags = [
+      ...(recipe.diets || []),
+      ...(recipe.dishTypes || []),
+      ...(recipe.cuisines || []),
+    ];
+    tags.forEach((t) => {
       tagsRow.appendChild(this.createTag(t));
     });
 
@@ -191,7 +196,9 @@ export class SearchView {
     this.container.innerHTML = "";
     const grid = document.createElement("div");
     grid.className = "recipes-grid";
-    recipes.forEach((r) => {
+    // Spoonacular: recipes may be nested under .recipes
+    const recipeList = Array.isArray(recipes) ? recipes : recipes.recipes || [];
+    recipeList.forEach((r) => {
       const card = this.createRecipeCard(r);
       grid.appendChild(card);
     });
