@@ -32,3 +32,20 @@
         <button id="mobile-menu-button" class="mobile-menu-button">☰</button>
     </div>
 </div>
+<script>
+    // Highlight active nav link by moving 'primary' class
+    document.addEventListener('DOMContentLoaded', function () {
+        const navLinks = document.querySelectorAll('.desktop-nav a');
+        const currentPath = location.pathname.replace(/\/index\.html$/, '/');
+        navLinks.forEach(link => {
+            // Normalize link href for comparison
+            let linkPath = link.getAttribute('href').replace(/\/index\.html$/, '/');
+            if (linkPath === currentPath) {
+                link.classList.add('primary');
+            } else {
+                link.classList.remove('primary');
+            }
+        });
+    });
+</script>
+</div>

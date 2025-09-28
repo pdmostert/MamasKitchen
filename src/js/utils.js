@@ -98,9 +98,19 @@ export async function loadHeaderFooter() {
   const footerElement = document.querySelector("#site-footer");
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
-  // Navigation initialization is intentionally not forced here.
-  // Pages that want extra JS-driven nav behavior (mobile menu, active state)
-  // can include or import `./navigation.js` themselves.
+
+  // Highlight active nav link by moving 'primary' class
+  // Run after header is rendered
+  const navLinks = headerElement.querySelectorAll(".desktop-nav a");
+  const currentPath = location.pathname.replace(/\/index\.html$/, "/");
+  navLinks.forEach((link) => {
+    let linkPath = link.getAttribute("href").replace(/\/index\.html$/, "/");
+    if (linkPath === currentPath) {
+      link.classList.add("primary");
+    } else {
+      link.classList.remove("primary");
+    }
+  });
 }
 
 // LocalStorage utilities
