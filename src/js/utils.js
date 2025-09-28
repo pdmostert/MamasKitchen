@@ -1,4 +1,26 @@
 /**
+ * Shows a modal with recipe details (image, title, cook time, servings, difficulty, tags, ingredients, instructions)
+ */
+export function showRecipeDetailsModal(recipe) {
+  const detailsHtml = `
+    <div class="modal-recipe-info">
+      <strong>${recipe.title}</strong><br>
+      <img src="${recipe.image}" alt="${recipe.title}" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;margin:1rem 0;">
+      <div><b>Cook Time:</b> ${recipe.cookTime} min</div>
+      <div><b>Servings:</b> ${recipe.servings}</div>
+      <div><b>Difficulty:</b> ${recipe.difficulty}</div>
+      <div><b>Tags:</b> ${(recipe.tags || []).join(", ")}</div>
+      <div><b>Ingredients:</b><ul>${(recipe.ingredients || []).map((ing) => `<li>${ing.name}${ing.amount ? ` (${ing.amount})` : ""}</li>`).join("")}</ul></div>
+      <div><b>Instructions:</b><br>${recipe.instructions ? `<p>${recipe.instructions}</p>` : "<em>No instructions provided.</em>"}</div>
+    </div>
+  `;
+  return showModal({
+    title: "Recipe Details",
+    content: detailsHtml,
+    onClose: null,
+  });
+}
+/**
  * Shows a modal dialog with the given HTML content and optional title.
  * Returns a function to close the modal.
  */

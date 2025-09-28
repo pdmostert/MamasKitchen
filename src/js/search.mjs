@@ -1,4 +1,4 @@
-import { showModal } from "./utils.js";
+import { showModal, showRecipeDetailsModal } from "./utils.js";
 export class SearchView {
   constructor(
     containerId = "main",
@@ -13,26 +13,8 @@ export class SearchView {
   }
 
   showRecipeDetailsModal(recipe) {
-    // Build details HTML
-    const detailsHtml = `
-      <div class="modal-recipe-info">
-        <strong>${recipe.title}</strong><br>
-        <img src="${recipe.image}" alt="${recipe.title}" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;margin:1rem 0;">
-        <div><b>Cook Time:</b> ${recipe.cookTime} min</div>
-        <div><b>Servings:</b> ${recipe.servings}</div>
-        <div><b>Difficulty:</b> ${recipe.difficulty}</div>
-        <div><b>Tags:</b> ${(recipe.tags||[]).join(", ")}</div>
-        <div><b>Ingredients:</b><ul>${(recipe.ingredients||[]).map(ing => `<li>${ing.name}${ing.amount ? ` (${ing.amount})` : ''}</li>`).join("")}</ul></div>
-        <div><b>Instructions:</b><br>${recipe.instructions ? `<p>${recipe.instructions}</p>` : '<em>No instructions provided.</em>'}</div>
-      </div>
-    `;
-    showModal({
-      title: "Recipe Details",
-      content: detailsHtml,
-      onClose: null
-    });
+    showRecipeDetailsModal(recipe);
   }
-
 
   createTag(text) {
     const span = document.createElement("span");
@@ -85,7 +67,9 @@ export class SearchView {
     const viewBtn = document.createElement("button");
     viewBtn.className = "nav-btn";
     viewBtn.textContent = "View Recipe";
-  viewBtn.addEventListener("click", () => this.showRecipeDetailsModal(recipe));
+    viewBtn.addEventListener("click", () =>
+      this.showRecipeDetailsModal(recipe)
+    );
 
     const addBtn = document.createElement("button");
     addBtn.className = "nav-btn primary";
@@ -155,19 +139,19 @@ export class SearchView {
       <label class="modal-label" for="modal-day-select">Day</label>
       <select id="modal-day-select" class="modal-select">
         <option value="">Select a day</option>
-        ${["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"].map(d => `<option value='${d}'>${d}</option>`).join("")}
+        ${["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((d) => `<option value='${d}'>${d}</option>`).join("")}
       </select>
       <label class="modal-label" for="modal-mealtype-select">Meal Type</label>
       <select id="modal-mealtype-select" class="modal-select">
         <option value="">Select meal type</option>
-        ${["breakfast","lunch","dinner","snack"].map(t => `<option value='${t}'>${t.charAt(0).toUpperCase()+t.slice(1)}</option>`).join("")}
+        ${["breakfast", "lunch", "dinner", "snack"].map((t) => `<option value='${t}'>${t.charAt(0).toUpperCase() + t.slice(1)}</option>`).join("")}
       </select>
       <div class="modal-btn-row"></div>
     `;
     showModal({
       title: "Add to Meal Plan",
       content: formHtml,
-      onClose: null
+      onClose: null,
     });
     // Attach event handler for Add to Plan button after modal is rendered
     setTimeout(() => {
@@ -183,8 +167,11 @@ export class SearchView {
         }
         let mealPlan = {};
         try {
-          mealPlan = JSON.parse(localStorage.getItem("mealPlannerMealPlan")) || {};
-        } catch { mealPlan = {}; }
+          mealPlan =
+            JSON.parse(localStorage.getItem("mealPlannerMealPlan")) || {};
+        } catch {
+          mealPlan = {};
+        }
         if (!mealPlan[day]) mealPlan[day] = {};
         mealPlan[day][mealType] = recipe;
         localStorage.setItem("mealPlannerMealPlan", JSON.stringify(mealPlan));

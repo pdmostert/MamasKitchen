@@ -1,4 +1,4 @@
-import { storage, toast } from "./utils.js";
+import { storage, toast, showRecipeDetailsModal } from "./utils.js";
 
 export default class MealPlan {
   constructor(containerId = "app") {
@@ -153,8 +153,7 @@ export default class MealPlan {
   }
 
   viewRecipeDetails(recipe) {
-    toast.info(`Viewing: ${recipe.title}`);
-    // You can implement navigation logic here
+    showRecipeDetailsModal(recipe);
   }
 
   render() {
