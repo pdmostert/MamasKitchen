@@ -1,3 +1,56 @@
+/**
+ * Shows a modal dialog with the given HTML content and optional title.
+ * Returns a function to close the modal.
+ */
+export function showModal({ title = "", content = "", onClose = null }) {
+  // Remove any existing modal
+  const existing = document.getElementById("global-modal");
+  if (existing) existing.remove();
+
+  // Modal overlay
+  const overlay = document.createElement("div");
+  overlay.id = "global-modal";
+  overlay.className = "modal-overlay";
+
+  // Modal box
+  const modal = document.createElement("div");
+  modal.className = "modal-box";
+
+  // Title (optional)
+  if (title) {
+    const titleEl = document.createElement("h2");
+    titleEl.className = "modal-title";
+    titleEl.textContent = title;
+    modal.appendChild(titleEl);
+  }
+
+  // Content
+  const contentEl = document.createElement("div");
+  contentEl.className = "modal-content";
+  if (typeof content === "string") {
+    contentEl.innerHTML = content;
+  } else {
+    contentEl.appendChild(content);
+  }
+  modal.appendChild(contentEl);
+
+  // Button row
+  const btnRow = document.createElement("div");
+  btnRow.className = "modal-btn-row";
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "modal-btn modal-cancel";
+  closeBtn.textContent = "Close";
+  closeBtn.onclick = () => {
+    overlay.remove();
+    if (typeof onClose === "function") onClose();
+  };
+  btnRow.appendChild(closeBtn);
+  modal.appendChild(btnRow);
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  return () => overlay.remove();
+}
 // Utility functions for loading templates, managing localStorage, and showing toasts
 
 export async function loadTemplate(path) {

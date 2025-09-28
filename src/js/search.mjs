@@ -1,3 +1,4 @@
+import { showModal } from "./utils.js";
 export class SearchView {
   constructor(
     containerId = "main",
@@ -10,6 +11,28 @@ export class SearchView {
     this.handlers = handlers;
     this.favoritesSet = new Set(favorites);
   }
+
+  showRecipeDetailsModal(recipe) {
+    // Build details HTML
+    const detailsHtml = `
+      <div class="modal-recipe-info">
+        <strong>${recipe.title}</strong><br>
+        <img src="${recipe.image}" alt="${recipe.title}" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;margin:1rem 0;">
+        <div><b>Cook Time:</b> ${recipe.cookTime} min</div>
+        <div><b>Servings:</b> ${recipe.servings}</div>
+        <div><b>Difficulty:</b> ${recipe.difficulty}</div>
+        <div><b>Tags:</b> ${(recipe.tags||[]).join(", ")}</div>
+        <div><b>Ingredients:</b><ul>${(recipe.ingredients||[]).map(ing => `<li>${ing.name}${ing.amount ? ` (${ing.amount})` : ''}</li>`).join("")}</ul></div>
+        <div><b>Instructions:</b><br>${recipe.instructions ? `<p>${recipe.instructions}</p>` : '<em>No instructions provided.</em>'}</div>
+      </div>
+    `;
+    showModal({
+      title: "Recipe Details",
+      content: detailsHtml,
+      onClose: null
+    });
+  }
+
 
   createTag(text) {
     const span = document.createElement("span");
@@ -62,7 +85,7 @@ export class SearchView {
     const viewBtn = document.createElement("button");
     viewBtn.className = "nav-btn";
     viewBtn.textContent = "View Recipe";
-    viewBtn.addEventListener("click", () => this.handlers.onView(recipe));
+  viewBtn.addEventListener("click", () => this.showRecipeDetailsModal(recipe));
 
     const addBtn = document.createElement("button");
     addBtn.className = "nav-btn primary";
@@ -70,18 +93,43 @@ export class SearchView {
     addBtn.addEventListener("click", () => this.showAddToPlanModal(recipe));
 
     const favBtn = document.createElement("button");
-    favBtn.className = "nav-btn nav-inactive";
+    favBtn.className =
+      "favorite-btn " +
+      (this.favoritesSet.has(recipe.id)
+        ? "favorite-active"
+        : "favorite-inactive");
+    favBtn.setAttribute(
+      "aria-label",
+      this.favoritesSet.has(recipe.id)
+        ? "Remove from favorites"
+        : "Add to favorites"
+    );
     favBtn.innerHTML = this.favoritesSet.has(recipe.id)
       ? "♥ Favorites"
       : "♡ Favorite";
     favBtn.addEventListener("click", () => {
       if (this.favoritesSet.has(recipe.id)) {
         this.favoritesSet.delete(recipe.id);
+        favBtn.className = "favorite-btn favorite-inactive";
+        favBtn.setAttribute("aria-label", "Add to favorites");
         favBtn.innerHTML = "♡ Favorite";
+        if (window.toast && typeof window.toast.info === "function") {
+          window.toast.info(`Removed ${recipe.title} from favorites`);
+        }
       } else {
         this.favoritesSet.add(recipe.id);
+        favBtn.className = "favorite-btn favorite-active";
+        favBtn.setAttribute("aria-label", "Remove from favorites");
         favBtn.innerHTML = "♥ Favorites";
+        if (window.toast && typeof window.toast.success === "function") {
+          window.toast.success(`Added ${recipe.title} to favorites`);
+        }
       }
+      // Persist favorites to localStorage
+      localStorage.setItem(
+        "mealPlannerFavorites",
+        JSON.stringify(Array.from(this.favoritesSet))
+      );
       this.handlers.onToggleFavorite(recipe);
     });
 
@@ -101,115 +149,55 @@ export class SearchView {
   }
 
   showAddToPlanModal(recipe) {
-    // Remove any existing modal
-    const existing = document.getElementById("add-to-plan-modal");
-    if (existing) existing.remove();
-
-    // Modal overlay
-    const overlay = document.createElement("div");
-    overlay.id = "add-to-plan-modal";
-    overlay.className = "modal-overlay";
-
-    // Modal box
-    const modal = document.createElement("div");
-    modal.className = "modal-box";
-
-    // Title
-    const title = document.createElement("h2");
-    title.className = "modal-title";
-    title.textContent = "Add to Meal Plan";
-    modal.appendChild(title);
-
-    // Recipe info
-    const recipeInfo = document.createElement("div");
-    recipeInfo.className = "modal-recipe-info";
-    recipeInfo.innerHTML = `<strong>Recipe</strong><br>${recipe.title}`;
-    modal.appendChild(recipeInfo);
-
-    // Day select
-    const dayLabel = document.createElement("label");
-    dayLabel.textContent = "Day";
-    dayLabel.htmlFor = "modal-day-select";
-    dayLabel.className = "modal-label";
-    modal.appendChild(dayLabel);
-    const daySelect = document.createElement("select");
-    daySelect.id = "modal-day-select";
-    daySelect.className = "modal-select";
-    daySelect.innerHTML =
-      `<option value="">Select a day</option>` +
-      [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ]
-        .map((d) => `<option value="${d}">${d}</option>`)
-        .join("");
-    modal.appendChild(daySelect);
-
-    // Meal type select
-    const mealTypeLabel = document.createElement("label");
-    mealTypeLabel.textContent = "Meal Type";
-    mealTypeLabel.htmlFor = "modal-mealtype-select";
-    mealTypeLabel.className = "modal-label";
-    modal.appendChild(mealTypeLabel);
-    const mealTypeSelect = document.createElement("select");
-    mealTypeSelect.id = "modal-mealtype-select";
-    mealTypeSelect.className = "modal-select";
-    mealTypeSelect.innerHTML =
-      `<option value="">Select meal type</option>` +
-      ["breakfast", "lunch", "dinner", "snack"]
-        .map(
-          (t) =>
-            `<option value="${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</option>`
-        )
-        .join("");
-    modal.appendChild(mealTypeSelect);
-
-    // Button row
-    const btnRow = document.createElement("div");
-    btnRow.className = "modal-btn-row";
-    const cancelBtn = document.createElement("button");
-    cancelBtn.className = "modal-btn modal-cancel";
-    cancelBtn.textContent = "Cancel";
-    cancelBtn.onclick = () => overlay.remove();
-    btnRow.appendChild(cancelBtn);
-    const addBtn = document.createElement("button");
-    addBtn.className = "modal-btn modal-confirm";
-    addBtn.textContent = "Add to Plan";
-    addBtn.onclick = () => {
-      const day = daySelect.value;
-      const mealType = mealTypeSelect.value;
-      if (!day || !mealType) {
-        alert("Please select both day and meal type.");
-        return;
-      }
-      // Get current meal plan
-      let mealPlan = {};
-      try {
-        mealPlan =
-          JSON.parse(localStorage.getItem("mealPlannerMealPlan")) || {};
-      } catch {
-        mealPlan = {};
-      }
-      if (!mealPlan[day]) mealPlan[day] = {};
-      mealPlan[day][mealType] = recipe;
-      localStorage.setItem("mealPlannerMealPlan", JSON.stringify(mealPlan));
-      overlay.remove();
-      // Show toast if available
-      if (window.toast && typeof window.toast.success === "function") {
-        window.toast.success(`Added ${recipe.title} to ${day} ${mealType}`);
-      } else {
-        alert(`Added ${recipe.title} to ${day} ${mealType}`);
-      }
-    };
-    btnRow.appendChild(addBtn);
-    modal.appendChild(btnRow);
-    overlay.appendChild(modal);
-    document.body.appendChild(overlay);
+    // Build modal content as HTML string
+    const formHtml = `
+      <div class="modal-recipe-info"><strong>Recipe</strong><br>${recipe.title}</div>
+      <label class="modal-label" for="modal-day-select">Day</label>
+      <select id="modal-day-select" class="modal-select">
+        <option value="">Select a day</option>
+        ${["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"].map(d => `<option value='${d}'>${d}</option>`).join("")}
+      </select>
+      <label class="modal-label" for="modal-mealtype-select">Meal Type</label>
+      <select id="modal-mealtype-select" class="modal-select">
+        <option value="">Select meal type</option>
+        ${["breakfast","lunch","dinner","snack"].map(t => `<option value='${t}'>${t.charAt(0).toUpperCase()+t.slice(1)}</option>`).join("")}
+      </select>
+      <div class="modal-btn-row"></div>
+    `;
+    showModal({
+      title: "Add to Meal Plan",
+      content: formHtml,
+      onClose: null
+    });
+    // Attach event handler for Add to Plan button after modal is rendered
+    setTimeout(() => {
+      const addBtn = document.createElement("button");
+      addBtn.className = "modal-btn modal-confirm";
+      addBtn.textContent = "Add to Plan";
+      addBtn.onclick = () => {
+        const day = document.getElementById("modal-day-select").value;
+        const mealType = document.getElementById("modal-mealtype-select").value;
+        if (!day || !mealType) {
+          alert("Please select both day and meal type.");
+          return;
+        }
+        let mealPlan = {};
+        try {
+          mealPlan = JSON.parse(localStorage.getItem("mealPlannerMealPlan")) || {};
+        } catch { mealPlan = {}; }
+        if (!mealPlan[day]) mealPlan[day] = {};
+        mealPlan[day][mealType] = recipe;
+        localStorage.setItem("mealPlannerMealPlan", JSON.stringify(mealPlan));
+        document.getElementById("global-modal").remove();
+        if (window.toast && typeof window.toast.success === "function") {
+          window.toast.success(`Added ${recipe.title} to ${day} ${mealType}`);
+        } else {
+          alert(`Added ${recipe.title} to ${day} ${mealType}`);
+        }
+      };
+      const btnRow = document.querySelector("#global-modal .modal-btn-row");
+      btnRow.appendChild(addBtn);
+    }, 0);
   }
 
   renderList(recipes) {

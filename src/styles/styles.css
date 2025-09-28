@@ -1,3 +1,32 @@
+/* Favorite Button Styles */
+.favorite-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #f3f4f6;
+  color: #9333ea;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.favorite-btn.favorite-active {
+  background: #9333ea;
+  color: #fff;
+}
+.favorite-btn.favorite-inactive {
+  background: #f3f4f6;
+  color: #9333ea;
+}
+.favorite-btn:hover {
+  background: #c4b5fd;
+  color: #fff;
+}
 /* Modal Styles */
 .modal-overlay {
   position: fixed;
