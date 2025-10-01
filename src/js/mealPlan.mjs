@@ -135,9 +135,20 @@ export default class MealPlan {
     }
   }
 
+
   handleAddMeal(day, mealType) {
-    toast.info(`Add meal clicked: ${mealType} for ${day}`);
-    // You can implement modal or selection logic here
+    const searchUrl = `/search/?type=${this.getMealTypeFilter(mealType)}&day=${day}&meal=${mealType}`;
+    window.location.href = searchUrl;
+  }
+
+  getMealTypeFilter(mealType) {
+    const typeMap = {
+      breakfast: "breakfast",
+      lunch: "main course",
+      dinner: "main course",
+      snack: "snack",
+    };
+    return typeMap[mealType] || "main course";
   }
 
   removeMealFromPlan(day, mealType) {
