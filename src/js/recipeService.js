@@ -148,9 +148,6 @@ async function getSpoonacularRecipeDetails(id) {
   }
 }
 
-// ============================================
-// PUBLIC API - What you use in your code
-// ============================================
 
 /**
  * Get all recipes

@@ -80,7 +80,7 @@ export function showModal({
   document.body.appendChild(overlay);
   return () => overlay.remove();
 }
-// Utility functions for loading templates, managing localStorage, and showing toasts
+
 
 export async function loadTemplate(path) {
   const res = await fetch(path);

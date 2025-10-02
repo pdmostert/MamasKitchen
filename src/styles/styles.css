@@ -118,21 +118,19 @@
 .modal-confirm:hover {
   background: #374151;
 }
-/* Top-level theme variables (kept minimal and explicit) */
+
 :root {
   /* Core variables kept for site theming and typography. */
   --font-size: 16px;
   --background: #ffffff;
-  --foreground: #030213; /* simplified -- previously used oklch */
+  --foreground: #030213; 
   --primary: #030213;
   --border: rgba(0, 0, 0, 0.1);
   --font-weight-medium: 500;
   --font-weight-normal: 400;
   --radius: 0.625rem;
 
-  /* Removed many unused design tokens (charts, sidebar-specific, popover/input variants)
-     to keep the top of the file focused on variables actually referenced by styles.
-     If you need any removed token later, re-add it here. */
+
 }
 
 .dark {
@@ -143,11 +141,7 @@
   --border: rgba(255, 255, 255, 0.06);
 }
 
-/* Removed Tailwind/PostCSS-specific at-rules (@custom-variant, @theme, @apply)
-   because this project uses a single canonical stylesheet without Tailwind runtime
-   processing. The rules below replace the small set of behaviors we relied on. */
 
-/* Reset box-sizing and set base background/text color */
 * {
   box-sizing: border-box;
 }
@@ -157,11 +151,7 @@ body {
   color: var(--foreground);
 }
 
-/**
- * Base typography. Converted from Tailwind/PostCSS layer to plain CSS.
- * This block applies default font sizes and weights where elements are not
- * explicitly styled by utility classes.
- */
+
 :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
   h1 {
     /* ~text-2xl */
@@ -409,7 +399,7 @@ html {
   }
 }
 
-/* --- Appended semantic styles (canonicalized into styles.css) --- */
+
 
 /* Header & navigation */
 .site-header {
@@ -604,7 +594,7 @@ html {
   color: #6b7280;
 }
 
-/* Grid for meal plan (ensure semantic class exists) */
+/* Grid for meal plan  */
 .grid {
   display: grid !important;
   grid-template-columns: auto repeat(7, 1fr) !important;
