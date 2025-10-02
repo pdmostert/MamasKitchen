@@ -1,5 +1,10 @@
 import { showModal, showRecipeDetailsModal, storage } from "./utils.js";
 import { getAllRecipes } from "./recipeService.js";
+
+/**
+ * SearchView class for displaying and filtering recipes
+ * Handles recipe display, search, filtering, and user interactions
+ */
 export class SearchView {
   constructor(
     containerId = "main",
@@ -8,7 +13,14 @@ export class SearchView {
     favorites = []
   ) {
     this.container = document.getElementById(containerId);
-    this.recipes = recipes[0].recipes; // Fixed: don't take [0], use the full array
+    
+    // Handle the nested mockRecipes structure
+    if (Array.isArray(recipes) && recipes.length > 0 && recipes[0].recipes) {
+      this.recipes = recipes[0].recipes;
+    } else {
+      this.recipes = Array.isArray(recipes) ? recipes : [];
+    }
+    
     this.handlers = handlers;
     this.favoritesArr = Array.isArray(favorites) ? favorites : [];
     this.urlFilters = this.getUrlFilters();

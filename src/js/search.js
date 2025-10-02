@@ -1,10 +1,13 @@
 import { loadHeaderFooter, storage } from "./utils.js";
 import { SearchView } from "./search.mjs";
-import { mockRecipes } from "./mockRecipes.js";
+import { getAllRecipes } from "./recipeService.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   loadHeaderFooter();
-  const recipes = mockRecipes;
+  
+  // Fetch recipes using the new service (handles mock vs real API automatically)
+  const recipes = await getAllRecipes();
+  
   const handlers = {
     onView: (recipe) => {
       alert(`View: ${recipe.title}`);
@@ -20,3 +23,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchView = new SearchView("main", recipes, handlers, favorites);
   searchView.render();
 });
+

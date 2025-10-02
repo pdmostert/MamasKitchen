@@ -55,7 +55,7 @@
   gap: 1.25rem;
 }
 
-.add-to-plan-modal{
+.add-to-plan-modal {
   width: 400px;
 }
 
@@ -63,7 +63,7 @@
 .modal-box.recipe-details-modal {
   max-width: 600px;
 }
-}
+
 .modal-title {
   font-size: 1.25rem;
   font-weight: 600;
@@ -737,4 +737,39 @@ html {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.5rem;
+}
+
+/* ============================================
+   CSS ANIMATIONS - Simplified
+   ============================================ */
+
+/**
+ * Simple fade in for modals
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal fade in */
+.modal-overlay {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Image zoom on hover - smooth and subtle */
+.recipe-image-wrapper {
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+}
+
+.recipe-image {
+  transition: transform 0.4s ease;
+}
+
+.recipe-card:hover .recipe-image {
+  transform: scale(1.08);
 }
