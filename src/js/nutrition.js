@@ -1,23 +1,12 @@
 import { loadHeaderFooter } from "./utils.js";
+import { NutritionView } from "./nutrition.mjs";
 
 async function init() {
   await loadHeaderFooter();
-  const container = document.getElementById("main");
+   const container = document.getElementById("main");
   container.innerHTML = "";
-
-  const main = document.createElement("main");
-  main.className = "page-main";
-  const title = document.createElement("h2");
-  title.className = "page-title";
-  title.textContent = "Nutrition Info";
-  main.appendChild(title);
-
-  const p = document.createElement("p");
-  p.className = "muted";
-  p.textContent = "Nutrition functionality coming soon!";
-  main.appendChild(p);
-
-  container.appendChild(main);
+  const nutritionInfo = new NutritionView("main");
+  nutritionInfo.init();
 }
 
 document.addEventListener("DOMContentLoaded", init);

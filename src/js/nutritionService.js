@@ -1,23 +1,4 @@
-/**
- * Nutrition Service - Simple Nutrition Lookup
- *
- * Uses Edamam Nutrition Analysis API to get nutrition info for ingredients or recipes
- * This is your SECOND API (separate from Spoonacular recipes)
- *
- * Free tier: 200 API calls per month
- * Get your free key at: https://developer.edamam.com/edamam-nutrition-api
- */
-
-// ============================================
-// CONFIGURATION
-// ============================================
-
-/**
- * Edamam API Configuration
- * Sign up at: https://developer.edamam.com/
- * Choose "Nutrition Analysis API" (free tier)
- */
-const EDAMAM_APP_ID =   import.meta.env.VITE_EDAMAM_APP_ID; // Add your App ID here
+const EDAMAM_APP_ID = import.meta.env.VITE_EDAMAM_APP_ID; // Add your App ID here
 const EDAMAM_APP_KEY = import.meta.env.VITE_EDAMAM_APP_KEY; // Add your App Key here
 const EDAMAM_API_URL = "https://api.edamam.com/api/nutrition-details";
 
@@ -65,6 +46,8 @@ export async function analyzeNutrition(ingredients, title = "Recipe") {
       }
     );
 
+    console.log(response);
+
     if (!response.ok) {
       throw new Error(`Edamam API error: ${response.status}`);
     }
@@ -101,76 +84,88 @@ export async function getNutritionForRecipe(recipe) {
  * @returns {Object} Formatted nutrition info
  */
 function formatNutritionData(rawData) {
-  const totalNutrients = rawData.totalNutrients || {};
-  const totalDaily = rawData.totalDaily || {};
+  const ingredients = rawData.ingredients || [];
+
+  // Initialize totals
+  const totals = {
+    calories: 0,
+    protein: 0,
+    carbs: 0,
+    fat: 0,
+    fiber: 0,
+    sugar: 0,
+    totalWeight: 0,
+  };
+
+  // Calculate totals from all ingredients
+  ingredients.forEach((ingredient) => {
+    if (ingredient.parsed && ingredient.parsed.length > 0) {
+      const parsedItem = ingredient.parsed[0]; // Take first parsed item
+      const nutrients = parsedItem.nutrients || {};
+
+      // Add to totals
+      totals.calories += nutrients.ENERC_KCAL?.quantity || 0;
+      totals.protein += nutrients.PROCNT?.quantity || 0;
+      totals.carbs += nutrients.CHOCDF?.quantity || 0;
+      totals.fat += nutrients.FAT?.quantity || 0;
+      totals.fiber += nutrients.FIBTG?.quantity || 0;
+      totals.sugar += nutrients.SUGAR?.quantity || 0;
+      totals.iron += nutrients.FE?.quantity || 0;
+      totals.totalWeight += parsedItem.weight || 0;
+    }
+  });
+
+  // Calculate daily percentages (based on 2000 calorie diet)
+  const dailyValues = {
+    calories: 2000,
+    protein: 50, // grams
+    carbs: 300, // grams
+    fat: 65, // grams
+    fiber: 25, // grams
+    sugar: 50, // grams
+  };
+
+  const servings = rawData.yield || 1;
 
   return {
-    calories: Math.round(rawData.calories || 0),
-    servings: rawData.yield || 1,
-    caloriesPerServing: Math.round(
-      (rawData.calories || 0) / (rawData.yield || 1)
-    ),
 
-    // Macronutrients
+
+    calories: {
+      amount: Math.round(totals.calories),
+      unit: "kcal",
+      dailyPercent: Math.round((totals.calories / dailyValues.calories) * 100),
+      dailyValues: dailyValues.calories,
+    },
     protein: {
-      amount: Math.round(totalNutrients.PROCNT?.quantity || 0),
-      unit: totalNutrients.PROCNT?.unit || "g",
-      dailyPercent: Math.round(totalDaily.PROCNT?.quantity || 0),
+      amount: Math.round(totals.protein),
+      unit: "g",
+      dailyPercent: Math.round((totals.protein / dailyValues.protein) * 100),
+      dailyValues: dailyValues.protein,
     },
     carbs: {
-      amount: Math.round(totalNutrients.CHOCDF?.quantity || 0),
-      unit: totalNutrients.CHOCDF?.unit || "g",
-      dailyPercent: Math.round(totalDaily.CHOCDF?.quantity || 0),
+      amount: Math.round(totals.carbs),
+      unit: "g",
+      dailyPercent: Math.round((totals.carbs / dailyValues.carbs) * 100),
+      dailyValues: dailyValues.carbs,
     },
     fat: {
-      amount: Math.round(totalNutrients.FAT?.quantity || 0),
-      unit: totalNutrients.FAT?.unit || "g",
-      dailyPercent: Math.round(totalDaily.FAT?.quantity || 0),
+      amount: Math.round(totals.fat),
+      unit: "g",
+      dailyPercent: Math.round((totals.fat / dailyValues.fat) * 100),
+      dailyValues: dailyValues.fat,
     },
     fiber: {
-      amount: Math.round(totalNutrients.FIBTG?.quantity || 0),
-      unit: totalNutrients.FIBTG?.unit || "g",
-      dailyPercent: Math.round(totalDaily.FIBTG?.quantity || 0),
+      amount: Math.round(totals.fiber),
+      unit: "g",
+      dailyPercent: Math.round((totals.fiber / dailyValues.fiber) * 100),
+      dailyValues: dailyValues.fiber,
     },
-
-    // Micronutrients
-    sodium: {
-      amount: Math.round(totalNutrients.NA?.quantity || 0),
-      unit: totalNutrients.NA?.unit || "mg",
-      dailyPercent: Math.round(totalDaily.NA?.quantity || 0),
+    sugar: {
+      amount: Math.round(totals.sugar),
+      unit: "g",
+      dailyPercent: Math.round((totals.sugar / dailyValues.sugar) * 100),
+      dailyValues: dailyValues.sugar,
     },
-    cholesterol: {
-      amount: Math.round(totalNutrients.CHOLE?.quantity || 0),
-      unit: totalNutrients.CHOLE?.unit || "mg",
-      dailyPercent: Math.round(totalDaily.CHOLE?.quantity || 0),
-    },
-
-    // Vitamins & Minerals (top ones)
-    vitaminA: {
-      amount: Math.round(totalNutrients.VITA_RAE?.quantity || 0),
-      unit: totalNutrients.VITA_RAE?.unit || "µg",
-      dailyPercent: Math.round(totalDaily.VITA_RAE?.quantity || 0),
-    },
-    vitaminC: {
-      amount: Math.round(totalNutrients.VITC?.quantity || 0),
-      unit: totalNutrients.VITC?.unit || "mg",
-      dailyPercent: Math.round(totalDaily.VITC?.quantity || 0),
-    },
-    calcium: {
-      amount: Math.round(totalNutrients.CA?.quantity || 0),
-      unit: totalNutrients.CA?.unit || "mg",
-      dailyPercent: Math.round(totalDaily.CA?.quantity || 0),
-    },
-    iron: {
-      amount: Math.round(totalNutrients.FE?.quantity || 0),
-      unit: totalNutrients.FE?.unit || "mg",
-      dailyPercent: Math.round(totalDaily.FE?.quantity || 0),
-    },
-
-    // Health labels
-    healthLabels: rawData.healthLabels || [],
-    dietLabels: rawData.dietLabels || [],
-    cautions: rawData.cautions || [],
   };
 }
 
