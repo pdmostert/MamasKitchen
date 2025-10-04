@@ -19,7 +19,7 @@ import { mockRecipes } from "./mockRecipes.js";
  * Set to TRUE during development to preserve API call limits
  * Set to FALSE when ready to use real API
  */
-const USE_MOCK_DATA = true;
+const USE_MOCK_DATA = false;
 
 /**
  * Spoonacular API Configuration
