@@ -1,10 +1,7 @@
-import { showModal, showRecipeDetailsModal, storage } from "./utils.js";
+import { showModal, showRecipeDetailsModal, storage, toast } from "./utils.js";
 import { getAllRecipes } from "./recipeService.js";
 
-/**
- * SearchView class for displaying and filtering recipes
- * Handles recipe display, search, filtering, and user interactions
- */
+
 export class SearchView {
   constructor(
     containerId = "main",
@@ -13,14 +10,7 @@ export class SearchView {
     favorites = []
   ) {
     this.container = document.getElementById(containerId);
-    
-    // Handle the nested mockRecipes structure
-    if (Array.isArray(recipes) && recipes.length > 0 && recipes[0].recipes) {
-      this.recipes = recipes[0].recipes;
-    } else {
-      this.recipes = Array.isArray(recipes) ? recipes : [];
-    }
-    
+    this.recipes = Array.isArray(recipes) ? recipes : [];
     this.handlers = handlers;
     this.favoritesArr = Array.isArray(favorites) ? favorites : [];
     this.urlFilters = this.getUrlFilters();
@@ -79,7 +69,7 @@ export class SearchView {
 
     const tagsRow = document.createElement("div");
     tagsRow.className = "recipe-tags";
-    // Spoonacular: use diets, dishTypes, cuisines as tags
+    // Combine all tags into one array for display
     const tags = [
       ...(recipe.diets || []),
       ...(recipe.dishTypes || []),
@@ -123,21 +113,16 @@ export class SearchView {
         favBtn.className = "favorite-btn favorite-inactive";
         favBtn.setAttribute("aria-label", "Add to favorites");
         favBtn.innerHTML = "♡ Favorite";
-        if (window.toast && typeof window.toast.info === "function") {
-          window.toast.info(`Removed ${recipe.title} from favorites`);
-        }
+          toast.info(`Removed ${recipe.title} from favorites`);
       } else {
         favorites.push(recipe);
         favBtn.className = "favorite-btn favorite-active";
         favBtn.setAttribute("aria-label", "Remove from favorites");
         favBtn.innerHTML = "♥ Favorites";
-        if (window.toast && typeof window.toast.success === "function") {
-          window.toast.success(`Added ${recipe.title} to favorites`);
-        }
+          toast.success(`Added ${recipe.title} to favorites`);
       }
       storage.setFavorites(favorites);
       this.favoritesArr = favorites;
-      this.handlers.onToggleFavorite(recipe);
     });
 
     actions.appendChild(viewBtn);
@@ -156,7 +141,7 @@ export class SearchView {
   }
 
   showAddToPlanModal(recipe) {
-    const { day, meal } = this.urlFilters; // Get from URL
+    const { day, meal } = this.urlFilters; // Pre-select from URL if available
 
     const formHtml = `
     <div class="modal-recipe-info"><strong>Recipe</strong><br>${recipe.title}</div>
@@ -205,7 +190,7 @@ export class SearchView {
         const day = document.getElementById("modal-day-select").value;
         const mealType = document.getElementById("modal-mealtype-select").value;
         if (!day || !mealType) {
-          alert("Please select both day and meal type.");
+          toast.error("Please select both day and meal type.");
           return;
         }
         let mealPlan = {};
@@ -222,7 +207,7 @@ export class SearchView {
         if (window.toast && typeof window.toast.success === "function") {
           window.toast.success(`Added ${recipe.title} to ${day} ${mealType}`);
         } else {
-          alert(`Added ${recipe.title} to ${day} ${mealType}`);
+          toast.success(`Added ${recipe.title} to ${day} ${mealType}`);
         }
       };
       const btnRow = document.querySelector("#global-modal .modal-btn-row");

@@ -10,7 +10,7 @@ export function showRecipeDetailsModal(recipe) {
       <div><b>Servings:</b> ${recipe.servings}</div>
       <div><b>Difficulty:</b> ${recipe.difficulty}</div>
       <div><b>Tags:</b> ${(recipe.tags || []).join(", ")}</div>
-      <div><b>Ingredients:</b><ul>${(recipe.ingredients || []).map((ing) => `<li>${ing.name}${ing.amount ? ` (${ing.amount})` : ""}</li>`).join("")}</ul></div>
+      <div><b>Ingredients:</b><ul>${(recipe.extendedIngredients || []).map((ing) => `<li>${ing.original}</li>`).join("")}</ul></div>
       <div><b>Instructions:</b><br>${recipe.instructions ? `<p>${recipe.instructions}</p>` : "<em>No instructions provided.</em>"}</div>
     </div>
   `;
