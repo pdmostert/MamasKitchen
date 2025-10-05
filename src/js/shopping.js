@@ -1,23 +1,6 @@
-import { loadHeaderFooter } from "./utils.js";
+import { ShoppingView } from "./shoppingView.mjs";
 
-async function init() {
-  await loadHeaderFooter();
-  const container = document.getElementById("main");
-  container.innerHTML = "";
-
-  const main = document.createElement("main");
-  main.className = "page-main";
-  const title = document.createElement("h2");
-  title.className = "page-title";
-  title.textContent = "Shopping List";
-  main.appendChild(title);
-
-  const p = document.createElement("p");
-  p.className = "muted";
-  p.textContent = "Shopping list functionality coming soon!";
-  main.appendChild(p);
-
-  container.appendChild(main);
-}
-
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", async () => {
+  const shoppingView = new ShoppingView("main");
+  await shoppingView.init();
+});
