@@ -28,9 +28,9 @@ export default class InspirationView {
       }
 
       this.data.inspirationRecipes = recipes;
-      console.log("Fetched inspiration recipes:", recipes);
+      // console.log("Fetched inspiration recipes:", recipes);
     } catch (error) {
-      console.error("Error fetching recipe inspiration:", error);
+      // console.error("Error fetching recipe inspiration:", error);
       toast.show("Could not load recipe inspiration", "error");
     }
   }

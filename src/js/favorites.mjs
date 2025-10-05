@@ -111,9 +111,9 @@ export default class FavoritesView {
     // Re-select container in case header/footer replaced it
     this.container = document.getElementById("main");
     if (!this.container) {
-      console.error(
-        "FavoritesView: #main container not found after header/footer load. Check your HTML and templates."
-      );
+      // console.error(
+      //   "FavoritesView: #main container not found after header/footer load. Check your HTML and templates."
+      // );
       throw new Error(
         "FavoritesView: #main container not found after header/footer load."
       );

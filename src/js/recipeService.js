@@ -11,7 +11,7 @@ const SPOONACULAR_BASE_URL = "https://api.spoonacular.com";
  */
 async function searchSpoonacularRecipes(query, options = {}) {
   if (!SPOONACULAR_API_KEY) {
-    console.error("Spoonacular API key not configured");
+    // console.error("Spoonacular API key not configured");
     toast.error("Recipe search is not configured. Please add an API key.");
     return [];
   }
@@ -46,7 +46,7 @@ async function searchSpoonacularRecipes(query, options = {}) {
     const data = await response.json();
     return data.results || [];
   } catch (error) {
-    console.error("Error fetching from Spoonacular:", error);
+    // console.error("Error fetching from Spoonacular:", error);
     // Only show toast if not already shown above
     if (!error.message.includes("API error")) {
       toast.error("Network error. Please check your connection.");
@@ -61,7 +61,7 @@ async function searchSpoonacularRecipes(query, options = {}) {
  */
 async function getRandomSpoonacularRecipes(count = 10) {
   if (!SPOONACULAR_API_KEY) {
-    console.error("Spoonacular API key not configured");
+    // console.error("Spoonacular API key not configured");
     toast.error("Recipe service is not configured. Please add an API key.");
     return [];
   }
@@ -85,7 +85,7 @@ async function getRandomSpoonacularRecipes(count = 10) {
     const data = await response.json();
     return data.recipes || [];
   } catch (error) {
-    console.error("Error fetching random recipes:", error);
+    // console.error("Error fetching random recipes:", error);
     if (!error.message.includes("API error")) {
       toast.error("Network error. Please check your connection.");
     }
@@ -99,7 +99,7 @@ async function getRandomSpoonacularRecipes(count = 10) {
  */
 async function getSpoonacularRecipeDetails(id) {
   if (!SPOONACULAR_API_KEY) {
-    console.error("Spoonacular API key not configured");
+    // console.error("Spoonacular API key not configured");
     toast.error("Recipe service is not configured. Please add an API key.");
     return null;
   }
@@ -124,7 +124,7 @@ async function getSpoonacularRecipeDetails(id) {
 
     return await response.json();
   } catch (error) {
-    console.error("Error fetching recipe details:", error);
+    // console.error("Error fetching recipe details:", error);
     if (!error.message.includes("API error")) {
       toast.error("Network error. Please check your connection.");
     }
