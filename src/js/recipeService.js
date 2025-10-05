@@ -6,7 +6,7 @@ const SPOONACULAR_BASE_URL = "https://api.spoonacular.com";
 /**
  * Search for recipes using Spoonacular API
  * @param {string} query - Search query string
- * @param {Object} options - Optional parameters (number, diet, cuisine)
+ * @param {Object} options - Optional parameters (number, diet, cuisine, type)
  * @returns {Array} - Array of recipe objects
  */
 async function searchSpoonacularRecipes(query, options = {}) {
@@ -24,6 +24,7 @@ async function searchSpoonacularRecipes(query, options = {}) {
     fillIngredients: true,
     ...(options.diet && { diet: options.diet }),
     ...(options.cuisine && { cuisine: options.cuisine }),
+    ...(options.type && { type: options.type }),
   });
 
   try {
