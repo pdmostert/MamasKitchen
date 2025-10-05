@@ -81,7 +81,6 @@ export function showModal({
   return () => overlay.remove();
 }
 
-
 export async function loadTemplate(path) {
   const res = await fetch(path);
   const template = await res.text();
@@ -120,6 +119,37 @@ export async function loadHeaderFooter() {
       link.classList.add("nav-inactive");
     }
   });
+
+  // Mobile menu toggle functionality
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuDropdown = document.getElementById("mobile-menu-dropdown");
+
+  if (mobileMenuButton && mobileMenuDropdown) {
+    // Toggle menu on button click
+    mobileMenuButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      mobileMenuDropdown.classList.toggle("open");
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+      if (
+        !mobileMenuButton.contains(e.target) &&
+        !mobileMenuDropdown.contains(e.target)
+      ) {
+        mobileMenuDropdown.classList.remove("open");
+      }
+    });
+
+    // Close menu when clicking a nav link
+    const mobileNavLinks =
+      mobileMenuDropdown.querySelectorAll(".mobile-nav-btn");
+    mobileNavLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenuDropdown.classList.remove("open");
+      });
+    });
+  }
 }
 
 // LocalStorage utilities
