@@ -198,13 +198,8 @@ export class SearchView {
     searchInput.className = "search-input";
     searchInput.id = "recipe-search-input";
 
-    const filterBtn = document.createElement("button");
-    filterBtn.className = "nav-btn";
-    filterBtn.textContent = "Filters";
-
     header.appendChild(title);
     header.appendChild(searchInput);
-    header.appendChild(filterBtn);
 
     searchInput.addEventListener("input", () => {
       const filtered = this.filterRecipes(searchInput.value);
