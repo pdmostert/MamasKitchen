@@ -1,108 +1,109 @@
-import { storage, loadHeaderFooter } from "./utils.js";
-import { getAllRecipes } from "./recipeService.js";
-import { SearchView } from "./search.mjs";
+import { storage, loadHeaderFooter, showModal, toast } from "./utils.js";
+import RecipeCard from "./RecipeCard.mjs";
 
 export default class FavoritesView {
-  createRecipeCard(recipe) {
-    const article = document.createElement("article");
-    article.className = "recipe-card";
-
-    const imgWrap = document.createElement("div");
-    imgWrap.className = "recipe-image-wrap";
-    const img = document.createElement("img");
-    img.src = recipe.image;
-    img.alt = recipe.title;
-    img.className = "recipe-image";
-    imgWrap.appendChild(img);
-
-    const body = document.createElement("div");
-    body.className = "recipe-body";
-
-    const header = document.createElement("div");
-    header.className = "recipe-header";
-    const title = document.createElement("h3");
-    title.className = "meal-title";
-    title.textContent = recipe.title;
-    header.appendChild(title);
-
-    const meta = document.createElement("div");
-    meta.className = "recipe-meta";
-    meta.innerHTML = `
-      <span class="muted">${recipe.readyInMinutes}m</span>
-      &nbsp;•&nbsp;
-      <span class="muted">${recipe.servings}p</span>
-    `;
-
-    const tagsRow = document.createElement("div");
-    tagsRow.className = "recipe-tags";
-    const tags = [
-      ...(recipe.diets || []),
-      ...(recipe.dishTypes || []),
-      ...(recipe.cuisines || []),
-    ];
-    tags.forEach((t) => {
-      const span = document.createElement("span");
-      span.className = "tag muted";
-      span.textContent = t;
-      tagsRow.appendChild(span);
-    });
-
-    // Ingredients preview (first 3)
-    const ingRow = document.createElement("div");
-    ingRow.className = "recipe-meta";
-    if (Array.isArray(recipe.extendedIngredients)) {
-      ingRow.innerHTML =
-        `<b>Ingredients:</b> ` +
-        recipe.extendedIngredients
-          .slice(0, 3)
-          .map((ing) => `${ing.name} (${ing.amount} ${ing.unit})`)
-          .join(", ");
-    }
-
-    const actions = document.createElement("div");
-    actions.className = "recipe-actions";
-
-    const viewBtn = document.createElement("button");
-    viewBtn.className = "nav-btn";
-    viewBtn.textContent = "View Recipe";
-    viewBtn.addEventListener("click", () => {
-      import("./utils.js").then(({ showRecipeDetailsModal }) => {
-        showRecipeDetailsModal(recipe);
-      });
-    });
-
-    const removeBtn = document.createElement("button");
-    removeBtn.className = "nav-btn danger";
-    removeBtn.textContent = "Remove";
-    removeBtn.addEventListener("click", () => {
-      this.removeFavorite(recipe.id);
-    });
-
-    actions.appendChild(viewBtn);
-    actions.appendChild(removeBtn);
-
-    body.appendChild(header);
-    body.appendChild(meta);
-    body.appendChild(tagsRow);
-    if (ingRow.innerHTML) body.appendChild(ingRow);
-    body.appendChild(actions);
-
-    article.appendChild(imgWrap);
-    article.appendChild(body);
-
-    return article;
+  constructor(containerId = "main") {
+    this.container = document.getElementById(containerId);
+    this.favoriteRecipes = storage.getFavorites() || [];
   }
 
+  /**
+   * Create a recipe card with favorite-specific actions
+   * Includes "Add to Plan" and "Remove" buttons
+   */
+  createRecipeCard(recipe) {
+    return RecipeCard.create(recipe, {
+      showAddToPlan: true,
+      showFavorite: false,
+      showRemove: true,
+      onAddToPlan: (recipe) => this.showAddToPlanModal(recipe),
+      onRemove: (id) => this.removeFavorite(id),
+      favorites: this.favoriteRecipes,
+    });
+  }
+
+  /**
+   * Show modal to add recipe to meal plan
+   * Same functionality as SearchView
+   */
+  showAddToPlanModal(recipe) {
+    const formHtml = `
+    <div class="modal-recipe-info"><strong>Recipe</strong><br>${recipe.title}</div>
+    <label class="modal-label" for="modal-day-select">Day</label>
+    <select id="modal-day-select" class="modal-select">
+      <option value="">Select a day</option>
+      ${[
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ]
+        .map((d) => `<option value='${d}'>${d}</option>`)
+        .join("")}
+    </select>
+    <label class="modal-label" for="modal-mealtype-select">Meal Type</label>
+    <select id="modal-mealtype-select" class="modal-select">
+      <option value="">Select meal type</option>
+      ${["breakfast", "lunch", "dinner", "snack"]
+        .map(
+          (t) =>
+            `<option value='${t}'>${t.charAt(0).toUpperCase() + t.slice(1)}</option>`
+        )
+        .join("")}
+    </select>
+    <div class="modal-btn-row"></div>
+  `;
+
+    showModal({
+      title: "Add to Meal Plan",
+      content: formHtml,
+      onClose: null,
+      modalClass: "add-to-plan-modal",
+    });
+
+    // Attach event handler for Add to Plan button after modal is rendered
+    setTimeout(() => {
+      const addBtn = document.createElement("button");
+      addBtn.className = "modal-btn modal-confirm";
+      addBtn.textContent = "Add to Plan";
+      addBtn.onclick = () => {
+        const day = document.getElementById("modal-day-select").value;
+        const mealType = document.getElementById("modal-mealtype-select").value;
+        if (!day || !mealType) {
+          toast.error("Please select both day and meal type.");
+          return;
+        }
+        let mealPlan = {};
+        try {
+          mealPlan =
+            JSON.parse(localStorage.getItem("mealPlannerMealPlan")) || {};
+        } catch {
+          mealPlan = {};
+        }
+        if (!mealPlan[day]) mealPlan[day] = {};
+        mealPlan[day][mealType] = recipe;
+        localStorage.setItem("mealPlannerMealPlan", JSON.stringify(mealPlan));
+        document.getElementById("global-modal").remove();
+        toast.success(`Added ${recipe.title} to ${day} ${mealType}`);
+      };
+      const btnRow = document.querySelector("#global-modal .modal-btn-row");
+      btnRow.appendChild(addBtn);
+    }, 0);
+  }
+
+  /**
+   * Remove a recipe from favorites
+   * @param {number} id - Recipe ID to remove
+   */
   removeFavorite(id) {
     this.favoriteRecipes = this.favoriteRecipes.filter(
       (r) => String(r.id) !== String(id)
     );
     storage.setFavorites(this.favoriteRecipes);
     this.render();
-  }
-  constructor(containerId = "main") {
-    this.container = document.getElementById(containerId);
-    this.favoriteRecipes = storage.getFavorites() || [];
   }
 
   async render() {

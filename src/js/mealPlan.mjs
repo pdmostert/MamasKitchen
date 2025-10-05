@@ -1,5 +1,20 @@
 import { storage, toast, showRecipeDetailsModal } from "./utils.js";
 
+/**
+ * MealPlan class - Manages and displays the weekly meal planner
+ *
+ * This class handles the display and interaction with the weekly meal plan.
+ * It supports two layout modes:
+ * - Desktop: Traditional grid with days as columns and meal types as rows
+ * - Mobile: Stacked cards grouped by day for better mobile usability
+ *
+ * Features:
+ * - Add meals by clicking empty slots (redirects to search with filters)
+ * - View recipe details
+ * - Remove meals from the plan
+ * - Automatically switches layout based on screen size
+ * - Persists data to localStorage
+ */
 export default class MealPlan {
   constructor(containerId = "app") {
     this.data = {
@@ -37,6 +52,11 @@ export default class MealPlan {
     return button;
   }
 
+  /**
+   * Create the meal plan grid
+   * On mobile (< 768px), renders as stacked day sections
+   * On desktop, renders as traditional grid with days as columns
+   */
   createMealPlan() {
     // Create main container
     const container = this.createElement("div", "meal-plan");
@@ -47,7 +67,26 @@ export default class MealPlan {
     header.appendChild(title);
     container.appendChild(header);
 
-    // Create the main grid container
+    // Check if mobile view
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      // Mobile layout: stack by day
+      const mobileContainer = this.createMobileMealPlan();
+      container.appendChild(mobileContainer);
+    } else {
+      // Desktop layout: traditional grid
+      const grid = this.createDesktopMealPlan();
+      container.appendChild(grid);
+    }
+
+    return container;
+  }
+
+  /**
+   * Create desktop grid layout (original layout)
+   */
+  createDesktopMealPlan() {
     const grid = this.createElement("div", "grid");
 
     // Add empty cell for top-left corner
@@ -78,7 +117,46 @@ export default class MealPlan {
       });
     });
 
-    container.appendChild(grid);
+    return grid;
+  }
+
+  /**
+   * Create mobile stacked layout (grouped by day)
+   */
+  createMobileMealPlan() {
+    const container = this.createElement("div", "grid");
+
+    this.days.forEach((day) => {
+      // Create day section
+      const daySection = this.createElement("div", "mobile-day-section");
+
+      // Day header
+      const dayHeader = this.createElement("div", "mobile-day-header", day);
+      daySection.appendChild(dayHeader);
+
+      // Add each meal type for this day
+      this.mealTypes.forEach((mealType) => {
+        const mealGroup = this.createElement("div", "mobile-meal-group");
+
+        // Meal type label
+        const mealTypeLabel = this.createElement(
+          "div",
+          "mobile-meal-type",
+          mealType.label
+        );
+        mealGroup.appendChild(mealTypeLabel);
+
+        // Meal slot
+        const meal = this.data.mealPlan[day]?.[mealType.key];
+        const mealSlot = this.createMealSlot(mealType.key, day, meal);
+        mealGroup.appendChild(mealSlot);
+
+        daySection.appendChild(mealGroup);
+      });
+
+      container.appendChild(daySection);
+    });
+
     return container;
   }
 
@@ -134,7 +212,6 @@ export default class MealPlan {
       return slot;
     }
   }
-
 
   handleAddMeal(day, mealType) {
     const searchUrl = `/search/?type=${this.getMealTypeFilter(mealType)}&day=${day}&meal=${mealType}`;
@@ -194,6 +271,15 @@ export default class MealPlan {
 
   init() {
     this.render();
+
+    // Re-render on window resize to switch between mobile/desktop layouts
+    let resizeTimeout;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        this.render();
+      }, 250); // Debounce resize events
+    });
   }
 }
 

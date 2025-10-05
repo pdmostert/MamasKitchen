@@ -1,7 +1,14 @@
-import { showModal, showRecipeDetailsModal, storage, toast } from "./utils.js";
+import { showModal, storage, toast } from "./utils.js";
 import { getAllRecipes } from "./recipeService.js";
+import RecipeCard from "./RecipeCard.mjs";
 
-
+/**
+ * SearchView class - Displays searchable recipe results
+ *
+ * Handles recipe search, filtering, and displays recipe cards with actions.
+ * Supports URL parameters for pre-filtering (useful when adding meals from meal planner).
+ * Users can search by text, filter by type, add recipes to favorites, or add to meal plan.
+ */
 export class SearchView {
   constructor(
     containerId = "main",
@@ -16,130 +23,41 @@ export class SearchView {
     this.urlFilters = this.getUrlFilters();
   }
 
+  /**
+   * Get filter parameters from URL query string
+   * Used when navigating from meal planner to pre-select day/meal type
+   * @returns {Object} - Object with type, query, day, and meal properties
+   */
   getUrlFilters() {
     const params = new URLSearchParams(window.location.search);
     return {
       type: params.get("type") || "",
       query: params.get("q") || "",
-      day: params.get("day") || "", // NEW
-      meal: params.get("meal") || "", // NEW
+      day: params.get("day") || "",
+      meal: params.get("meal") || "",
     };
   }
 
-  showRecipeDetailsModal(recipe) {
-    showRecipeDetailsModal(recipe);
-  }
-
-  createTag(text) {
-    const span = document.createElement("span");
-    span.className = "tag muted";
-    span.textContent = text;
-    return span;
-  }
-
+  /**
+   * Create a recipe card using the shared RecipeCard module
+   * Configured for search view with "Add to Plan" and favorite buttons
+   */
   createRecipeCard(recipe) {
-    const article = document.createElement("article");
-    article.className = "recipe-card";
-
-    const imgWrap = document.createElement("div");
-    imgWrap.className = "recipe-image-wrap";
-    const img = document.createElement("img");
-    img.src = recipe.image;
-    img.alt = recipe.title;
-    img.className = "recipe-image";
-    imgWrap.appendChild(img);
-
-    const body = document.createElement("div");
-    body.className = "recipe-body";
-
-    const header = document.createElement("div");
-    header.className = "recipe-header";
-    const title = document.createElement("h3");
-    title.className = "meal-title";
-    title.textContent = recipe.title;
-    header.appendChild(title);
-
-    const meta = document.createElement("div");
-    meta.className = "recipe-meta";
-    meta.innerHTML = `
-      <span class="muted">${recipe.readyInMinutes}m</span>
-      &nbsp;•&nbsp;
-      <span class="muted">${recipe.servings}p</span>
-    `;
-
-    const tagsRow = document.createElement("div");
-    tagsRow.className = "recipe-tags";
-    // Combine all tags into one array for display
-    const tags = [
-      ...(recipe.diets || []),
-      ...(recipe.dishTypes || []),
-      ...(recipe.cuisines || []),
-    ];
-    tags.forEach((t) => {
-      tagsRow.appendChild(this.createTag(t));
+    // Use the shared RecipeCard module with search-specific actions
+    return RecipeCard.create(recipe, {
+      showAddToPlan: true,
+      showFavorite: true,
+      showRemove: false,
+      onAddToPlan: (recipe) => this.showAddToPlanModal(recipe),
+      favorites: this.favoritesArr,
     });
-
-    const actions = document.createElement("div");
-    actions.className = "recipe-actions";
-
-    const viewBtn = document.createElement("button");
-    viewBtn.className = "nav-btn";
-    viewBtn.textContent = "View Recipe";
-    viewBtn.addEventListener("click", () =>
-      this.showRecipeDetailsModal(recipe)
-    );
-
-    const addBtn = document.createElement("button");
-    addBtn.className = "nav-btn primary";
-    addBtn.textContent = "Add to Plan";
-    addBtn.addEventListener("click", () => this.showAddToPlanModal(recipe));
-
-    const favBtn = document.createElement("button");
-    const isFavorite = this.favoritesArr.some(
-      (fav) =>
-        fav && typeof fav === "object" && "id" in fav && fav.id === recipe.id
-    );
-    favBtn.className =
-      "favorite-btn " + (isFavorite ? "favorite-active" : "favorite-inactive");
-    favBtn.setAttribute(
-      "aria-label",
-      isFavorite ? "Remove from favorites" : "Add to favorites"
-    );
-    favBtn.innerHTML = isFavorite ? "♥ Favorites" : "♡ Favorite";
-    favBtn.addEventListener("click", () => {
-      let favorites = storage.getFavorites() || [];
-      if (favorites.some((fav) => fav.id === recipe.id)) {
-        favorites = favorites.filter((fav) => fav.id !== recipe.id);
-        favBtn.className = "favorite-btn favorite-inactive";
-        favBtn.setAttribute("aria-label", "Add to favorites");
-        favBtn.innerHTML = "♡ Favorite";
-          toast.info(`Removed ${recipe.title} from favorites`);
-      } else {
-        favorites.push(recipe);
-        favBtn.className = "favorite-btn favorite-active";
-        favBtn.setAttribute("aria-label", "Remove from favorites");
-        favBtn.innerHTML = "♥ Favorites";
-          toast.success(`Added ${recipe.title} to favorites`);
-      }
-      storage.setFavorites(favorites);
-      this.favoritesArr = favorites;
-    });
-
-    actions.appendChild(viewBtn);
-    actions.appendChild(addBtn);
-    actions.appendChild(favBtn);
-
-    body.appendChild(header);
-    body.appendChild(meta);
-    body.appendChild(tagsRow);
-    body.appendChild(actions);
-
-    article.appendChild(imgWrap);
-    article.appendChild(body);
-
-    return article;
   }
 
+  /**
+   * Show modal to add a recipe to the meal plan
+   * Pre-selects day and meal type if provided via URL parameters
+   * @param {Object} recipe - Recipe object to add to meal plan
+   */
   showAddToPlanModal(recipe) {
     const { day, meal } = this.urlFilters; // Pre-select from URL if available
 

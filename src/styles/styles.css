@@ -106,10 +106,11 @@
 }
 .modal-cancel {
   background: #f3f4f6;
-  color: #374151;
+  color: #1f2937; /* Improved contrast */
 }
 .modal-cancel:hover {
   background: #e5e7eb;
+  color: #111827; /* Even better contrast on hover */
 }
 .modal-confirm {
   background: #6b7280;
@@ -232,7 +233,7 @@ html {
 
 .meal-type-label {
   font-weight: 600;
-  color: #374151;
+  color: #1f2937; /* Darkened for better contrast */
   padding: 1rem 0.5rem;
   text-align: right;
   align-self: center;
@@ -581,14 +582,14 @@ html {
 .page-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #374151;
+  color: #1f2937;
   margin-bottom: 1.25rem;
 }
 .muted {
-  color: #6b7280;
+  color: #4b5563; /* Improved from #6b7280 for better contrast (6.38:1 vs 4.58:1) */
 }
 
-/* Grid for meal plan  */
+/* Grid for meal plan */
 .grid {
   display: grid !important;
   grid-template-columns: auto repeat(7, 1fr) !important;
@@ -596,6 +597,79 @@ html {
   align-items: start;
   width: 100%;
   overflow-x: auto;
+}
+
+/* Mobile-responsive meal planner: stack vertically by day */
+@media (max-width: 768px) {
+  .meal-plan-container {
+    padding: 1rem;
+  }
+
+  .grid {
+    /* Switch to single column layout */
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2rem !important;
+    overflow-x: visible;
+    width: 100%; /* Ensure full width */
+  }
+
+  /* Hide the meal type labels (left column) and top day headers on mobile */
+  .meal-type-label {
+    display: none;
+  }
+
+  /* Create mobile day sections */
+  .mobile-day-section {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    width: 100%; /* Force all day sections to be same width */
+    box-sizing: border-box; /* Include padding and border in width */
+  }
+
+  .mobile-day-header {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e5e7eb;
+  }
+
+  .mobile-meal-group {
+    margin-bottom: 1rem;
+  }
+
+  .mobile-meal-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .mobile-meal-type {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4b5563; /* Improved contrast */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Adjust meal slots for mobile */
+  .meal-slot {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .meal-slot.filled {
+    padding: 0.75rem;
+  }
+
+  .meal-slot.empty {
+    min-height: 60px;
+    padding: 0.75rem;
+  }
 }
 
 /* end appended block */
@@ -873,4 +947,73 @@ html {
   opacity: 0.6;
   cursor: not-allowed;
   background: #9ca3af;
+}
+
+/* Shopping List Styles */
+.shopping-page-main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.shopping-subtitle {
+  color: #4b5563; /* Improved contrast */
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.shopping-empty {
+  text-align: center;
+  color: #4b5563; /* Improved contrast */
+  margin-top: 2rem;
+}
+
+.aisle-section {
+  margin-bottom: 2rem;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.aisle-header {
+  background: #f3f4f6;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  color: #1f2937; /* Improved contrast */
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.aisle-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredient-item {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ingredient-item:last-child {
+  border-bottom: none;
+}
+
+.ingredient-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.ingredient-label {
+  cursor: pointer;
+  flex: 1;
+}
+
+.ingredient-label.checked {
+  text-decoration: line-through;
+  color: #9ca3af;
 }

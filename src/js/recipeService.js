@@ -1,12 +1,18 @@
+import { toast } from "./utils.js";
 
 const SPOONACULAR_API_KEY = import.meta.env.VITE_SPOONACULAR_API_KEY;
 const SPOONACULAR_BASE_URL = "https://api.spoonacular.com";
 
-
-
+/**
+ * Search for recipes using Spoonacular API
+ * @param {string} query - Search query string
+ * @param {Object} options - Optional parameters (number, diet, cuisine)
+ * @returns {Array} - Array of recipe objects
+ */
 async function searchSpoonacularRecipes(query, options = {}) {
   if (!SPOONACULAR_API_KEY) {
     console.error("Spoonacular API key not configured");
+    toast.error("Recipe search is not configured. Please add an API key.");
     return [];
   }
 
@@ -26,6 +32,13 @@ async function searchSpoonacularRecipes(query, options = {}) {
     );
 
     if (!response.ok) {
+      if (response.status === 402) {
+        toast.error("API limit reached. Please try again later.");
+      } else if (response.status === 401) {
+        toast.error("Invalid API key. Please check your configuration.");
+      } else {
+        toast.error("Failed to search recipes. Please try again.");
+      }
       throw new Error(`API error: ${response.status}`);
     }
 
@@ -33,14 +46,22 @@ async function searchSpoonacularRecipes(query, options = {}) {
     return data.results || [];
   } catch (error) {
     console.error("Error fetching from Spoonacular:", error);
+    // Only show toast if not already shown above
+    if (!error.message.includes("API error")) {
+      toast.error("Network error. Please check your connection.");
+    }
     return [];
   }
 }
-
-
+/**
+ * Get random recipes from Spoonacular API
+ * @param {number} count - Number of random recipes to fetch
+ * @returns {Array} - Array of recipe objects
+ */
 async function getRandomSpoonacularRecipes(count = 10) {
   if (!SPOONACULAR_API_KEY) {
     console.error("Spoonacular API key not configured");
+    toast.error("Recipe service is not configured. Please add an API key.");
     return [];
   }
 
@@ -50,6 +71,13 @@ async function getRandomSpoonacularRecipes(count = 10) {
     );
 
     if (!response.ok) {
+      if (response.status === 402) {
+        toast.error("API limit reached. Please try again later.");
+      } else if (response.status === 401) {
+        toast.error("Invalid API key. Please check your configuration.");
+      } else {
+        toast.error("Failed to load recipes. Please try again.");
+      }
       throw new Error(`API error: ${response.status}`);
     }
 
@@ -57,14 +85,21 @@ async function getRandomSpoonacularRecipes(count = 10) {
     return data.recipes || [];
   } catch (error) {
     console.error("Error fetching random recipes:", error);
+    if (!error.message.includes("API error")) {
+      toast.error("Network error. Please check your connection.");
+    }
     return [];
   }
 }
-
-
+/**
+ * Get detailed information for a specific recipe
+ * @param {number} id - Recipe ID from Spoonacular
+ * @returns {Object|null} - Recipe details object or null if error
+ */
 async function getSpoonacularRecipeDetails(id) {
   if (!SPOONACULAR_API_KEY) {
     console.error("Spoonacular API key not configured");
+    toast.error("Recipe service is not configured. Please add an API key.");
     return null;
   }
 
@@ -74,37 +109,40 @@ async function getSpoonacularRecipeDetails(id) {
     );
 
     if (!response.ok) {
+      if (response.status === 402) {
+        toast.error("API limit reached. Please try again later.");
+      } else if (response.status === 401) {
+        toast.error("Invalid API key. Please check your configuration.");
+      } else if (response.status === 404) {
+        toast.error("Recipe not found.");
+      } else {
+        toast.error("Failed to load recipe details. Please try again.");
+      }
       throw new Error(`API error: ${response.status}`);
     }
 
     return await response.json();
   } catch (error) {
     console.error("Error fetching recipe details:", error);
+    if (!error.message.includes("API error")) {
+      toast.error("Network error. Please check your connection.");
+    }
     return null;
   }
 }
-
-
 
 export function getAllRecipes() {
   return getRandomSpoonacularRecipes(20);
 }
 
-
 export async function searchRecipes(query, options = {}) {
-
   return searchSpoonacularRecipes(query, options);
 }
-
 
 export async function getRecipeById(id) {
   return getSpoonacularRecipeDetails(id);
 }
 
-
 export async function getRandomRecipes(count = 20) {
   return getRandomSpoonacularRecipes(count);
 }
-
-
-
