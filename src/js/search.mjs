@@ -102,7 +102,7 @@ export class SearchView {
     // Attach event handler for Add to Plan button after modal is rendered
     setTimeout(() => {
       const addBtn = document.createElement("button");
-      addBtn.className = "modal-btn modal-confirm";
+      addBtn.className = "btn btn-gray";
       addBtn.textContent = "Add to Plan";
       addBtn.onclick = () => {
         const day = document.getElementById("modal-day-select").value;
@@ -246,7 +246,7 @@ export class SearchView {
     filterInfo.className = "active-filter-info";
     filterInfo.innerHTML = `
       <span>Filtered by: <strong>${this.urlFilters.type}</strong></span>
-      <button onclick="window.location.href='${window.location.pathname}'" class="clear-filter-btn">Clear Filter</button>
+      <button onclick="window.location.href='${window.location.pathname}'" class="btn btn-gray btn-sm clear-filter-btn">Clear Filter</button>
     `;
     this.container.insertBefore(filterInfo, this.container.children[1]);
   }

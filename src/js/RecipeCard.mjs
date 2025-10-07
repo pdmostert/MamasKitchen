@@ -99,7 +99,7 @@ export const RecipeCard = {
 
     // View Recipe button (always shown)
     const viewBtn = document.createElement("button");
-    viewBtn.className = "nav-btn";
+    viewBtn.className = "btn btn-light";
     viewBtn.textContent = "View Recipe";
     viewBtn.addEventListener("click", () => showRecipeDetailsModal(recipe));
     actions.appendChild(viewBtn);
@@ -107,7 +107,7 @@ export const RecipeCard = {
     // Add to Plan button (optional)
     if (showAddToPlan && onAddToPlan) {
       const addBtn = document.createElement("button");
-      addBtn.className = "nav-btn primary";
+      addBtn.className = "btn btn-primary";
       addBtn.textContent = "Add to Plan";
       addBtn.addEventListener("click", () => onAddToPlan(recipe));
       actions.appendChild(addBtn);
@@ -122,7 +122,7 @@ export const RecipeCard = {
     // Remove button (optional)
     if (showRemove && onRemove) {
       const removeBtn = document.createElement("button");
-      removeBtn.className = "nav-btn danger";
+      removeBtn.className = "btn btn-danger";
       removeBtn.textContent = "Remove";
       removeBtn.addEventListener("click", () => onRemove(recipe.id));
       actions.appendChild(removeBtn);

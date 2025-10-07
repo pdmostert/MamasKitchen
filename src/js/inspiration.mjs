@@ -40,7 +40,7 @@ export default class InspirationView {
     const recipesHtml = this.data.inspirationRecipes
       .map(
         (recipe) => `
-      <div class="inspiration-card">
+      <div class="recipe-card inspiration">
         <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}" class="recipe-image">
         <div class="recipe-info">
           <h3>${recipe.strMeal}</h3>
@@ -48,7 +48,7 @@ export default class InspirationView {
             <span class="badge">${recipe.strCategory}</span>
             <span class="badge">${recipe.strArea}</span>
           </p>
-          <a href="${recipe.strSource || recipe.strYoutube}" target="_blank" class="btn-primary">
+          <a href="${recipe.strSource || recipe.strYoutube}" target="_blank" class="btn btn-primary">
             View Full Recipe
           </a>
         </div>
@@ -66,7 +66,7 @@ export default class InspirationView {
           ${recipesHtml || "<p>Loading inspiration...</p>"}
         </div>
         
-        <button id="refresh-inspiration" class="btn-secondary">
+        <button id="refresh-inspiration" class="btn btn-secondary">
           🔄 Get More Ideas
         </button>
       </div>

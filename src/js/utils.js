@@ -67,7 +67,7 @@ export function showModal({
   const btnRow = document.createElement("div");
   btnRow.className = "modal-btn-row";
   const closeBtn = document.createElement("button");
-  closeBtn.className = "modal-btn modal-cancel";
+  closeBtn.className = "btn btn-light";
   closeBtn.textContent = "Close";
   closeBtn.onclick = () => {
     overlay.remove();

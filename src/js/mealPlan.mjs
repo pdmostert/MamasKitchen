@@ -181,12 +181,12 @@ export default class MealPlan {
 
       const viewBtn = this.createButton(
         "View",
-        "meal-action-btn view-btn",
+        "btn btn-light btn-sm meal-action-btn view-btn",
         () => this.viewRecipeDetails(meal)
       );
       const removeBtn = this.createButton(
         "Remove",
-        "meal-action-btn remove-btn",
+        "btn btn-danger btn-sm meal-action-btn remove-btn",
         () => this.removeMealFromPlan(day, mealTypeKey)
       );
 

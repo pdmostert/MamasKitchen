@@ -67,7 +67,7 @@ export default class FavoritesView {
     // Attach event handler for Add to Plan button after modal is rendered
     setTimeout(() => {
       const addBtn = document.createElement("button");
-      addBtn.className = "modal-btn modal-confirm";
+      addBtn.className = "btn btn-gray";
       addBtn.textContent = "Add to Plan";
       addBtn.onclick = () => {
         const day = document.getElementById("modal-day-select").value;

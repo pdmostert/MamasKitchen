@@ -1,30 +1,41 @@
-/* Favorite Button Styles */
+/* ============================================================================
+   MAMA'S KITCHEN - MAIN STYLESHEET
+   ============================================================================
+   
+   TABLE OF CONTENTS:
+   1. Reusable Components (Buttons, Modals, Cards, Toasts, Tags)
+   2. CSS Variables & Theme
+   3. Base Styles & Typography  
+   4. Layout Components (Header, Footer, Page Structure)
+   5. Page-Specific Styles (Meal Plan, Search, Favorites, Inspiration, Shopping)
+   6. Animations
+   7. Media Queries & Responsive Design
+   
+   ============================================================================ */
+
+/* ============================================
+   1. REUSABLE COMPONENTS
+   ============================================ */
+
+/* --- Favorite Button --- */
 .favorite-btn {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: none;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  background: #f3f4f6;
-  color: #9333ea;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  background: var(--gray-100);
+  color: var(--purple-600);
 }
 .favorite-btn.favorite-active {
-  background: #9333ea;
+  background: var(--purple-600);
   color: #fff;
 }
 .favorite-btn.favorite-inactive {
-  background: #f3f4f6;
-  color: #9333ea;
+  background: var(--gray-100);
+  color: var(--purple-600);
 }
 .favorite-btn:hover {
-  background: #c4b5fd;
+  background: var(--purple-400);
   color: #fff;
 }
-/* Modal Styles */
+
+/* --- Modal Styles --- */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -36,14 +47,14 @@
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.2s;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--gray-200);
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
 .modal-box {
-  background: #fff;
+  background: var(--bg-white);
   border-radius: 12px;
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.12);
   padding: 2rem;
@@ -71,7 +82,7 @@
   color: #22223b;
 }
 .modal-recipe-info {
-  background: #f3f4f6;
+  background: var(--gray-100);
   border-radius: 8px;
   padding: 0.75rem 1rem;
   margin-bottom: 0.5rem;
@@ -86,7 +97,7 @@
   width: 100%;
   padding: 0.5rem;
   border-radius: 6px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--gray-200);
   margin-bottom: 0.5rem;
   font-size: 1rem;
 }
@@ -95,50 +106,200 @@
   justify-content: flex-end;
   gap: 1rem;
 }
-.modal-btn {
-  padding: 0.5rem 1.25rem;
+
+/* ============================================
+   UNIFIED BUTTON SYSTEM
+   ============================================================================ */
+
+/* Base button with shared properties */
+.btn {
+  padding: 0.5rem 1rem;
   border-radius: 6px;
   border: none;
-  font-weight: 500;
   font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
-}
-.modal-cancel {
-  background: #f3f4f6;
-  color: #1f2937; /* Improved contrast */
-}
-.modal-cancel:hover {
-  background: #e5e7eb;
-  color: #111827; /* Even better contrast on hover */
-}
-.modal-confirm {
-  background: #6b7280;
-  color: #fff;
-}
-.modal-confirm:hover {
-  background: #374151;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  line-height: 1.5;
 }
 
+/* Size variants */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 4px;
+}
+
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+/* Color variants */
+.btn-primary {
+  background: var(--orange-500);
+  color: #000;
+}
+
+.btn-primary:hover {
+  background: var(--orange-600);
+}
+
+.btn-secondary {
+  background: var(--purple-500);
+  color: #000;
+}
+
+.btn-secondary:hover {
+  background: var(--purple-700);
+}
+
+.btn-gray {
+  background: var(--gray-500);
+  color: #fff;
+}
+
+.btn-gray:hover {
+  background: var(--gray-700);
+}
+
+.btn-light {
+  background: var(--gray-100);
+  color: var(--gray-800);
+}
+
+.btn-light:hover {
+  background: var(--gray-200);
+  color: var(--gray-900);
+}
+
+.btn-danger {
+  background: #fef2f2;
+  color: #000;
+}
+
+.btn-danger:hover {
+  background: #fee2e2;
+}
+
+/* Disabled state */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--gray-400);
+}
+
+/* ============================================
+   2. CSS VARIABLES & THEME
+   ============================================ */
+
 :root {
-  /* Core variables kept for site theming and typography. */
+  /* ============================================
+     TYPOGRAPHY & LAYOUT
+     ============================================ */
   --font-size: 16px;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --radius: 0.625rem;
+
+  /* ============================================
+     COLOR SYSTEM - GRAYS
+     ============================================ */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* ============================================
+     COLOR SYSTEM - PRIMARY COLORS
+     ============================================ */
+  --orange-400: #fb923c;
+  --orange-500: #f97316;
+  --orange-600: #ea580c;
+
+  --purple-400: #c4b5fd;
+  --purple-500: #9c9df3;
+  --purple-600: #9333ea;
+  --purple-700: #7c3aed;
+  --purple-800: #6b21a8;
+
+  /* ============================================
+     COLOR SYSTEM - SEMANTIC COLORS
+     ============================================ */
+  --success-500: #10b981;
+  --success-600: #059669;
+
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+
+  --info-500: #3b82f6;
+  --info-600: #2563eb;
+
+  /* ============================================
+     COLOR SYSTEM - MEAL TYPE COLORS
+     ============================================ */
+  --breakfast-bg: #fff7ed;
+  --breakfast-bg-hover: #ffedd5;
+  --breakfast-border: #fed7aa;
+  --breakfast-border-hover: #fb923c;
+
+  --lunch-bg: #f0fdf4;
+  --lunch-bg-hover: #dcfce7;
+  --lunch-border: #bbf7d0;
+  --lunch-border-hover: #4ade80;
+
+  --dinner-bg: #eff6ff;
+  --dinner-bg-hover: #dbeafe;
+  --dinner-border: #bfdbfe;
+  --dinner-border-hover: #60a5fa;
+
+  --snack-bg: #faf5ff;
+  --snack-bg-hover: #f3e8ff;
+  --snack-border: #e9d5ff;
+  --snack-border-hover: #c084fc;
+
+  /* ============================================
+     SEMANTIC VARIABLES (using color system)
+     ============================================ */
   --background: #ffffff;
   --foreground: #030213;
   --primary: #030213;
   --border: rgba(0, 0, 0, 0.1);
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --radius: 0.625rem;
+
+  /* Text colors */
+  --text-base: #030213;
+  --text-muted: #4b5563;
+  --text-muted-light: #6b7280;
+  --text-muted-lighter: #9ca3af;
+
+  /* Background colors */
+  --bg-white: #ffffff;
+  --bg-light: #f9fafb;
+  --bg-gray: #f3f4f6;
+
+  /* Border colors */
+  --border-light: #f3f4f6;
+  --border-base: #e5e7eb;
+  --border-dark: #d1d5db;
+
+  /* Shadow overlays */
+  --overlay-light: rgba(0, 0, 0, 0.1);
+  --overlay-medium: rgba(0, 0, 0, 0.15);
 }
 
-.dark {
-  /* Dark theme overrides: keep only what's referenced elsewhere in this file */
-  --background: #0b0b0b;
-  --foreground: #f7f7f8;
-  --primary: #f7f7f8;
-  --border: rgba(255, 255, 255, 0.06);
-}
+/* ============================================
+   3. BASE STYLES & TYPOGRAPHY
+   ============================================ */
 
 * {
   box-sizing: border-box;
@@ -149,69 +310,66 @@ body {
   color: var(--foreground);
 }
 
-:where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
-  h1 {
-    /* ~text-2xl */
-    font-size: 2rem;
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+/* ============================================
+   BASE TYPOGRAPHY
+   ============================================ */
+h1 {
+  font-size: 2rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
 
-  h2 {
-    /* ~text-xl */
-    font-size: 1.25rem;
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+h2 {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
 
-  h3 {
-    /* ~text-lg */
-    font-size: 1.125rem;
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+h3 {
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
 
-  h4 {
-    /* ~text-base */
-    font-size: 1rem;
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+h4 {
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
 
-  p {
-    /* ~text-base */
-    font-size: 1rem;
-    font-weight: var(--font-weight-normal);
-    line-height: 1.5;
-  }
+p {
+  font-size: 1rem;
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
+}
 
-  label {
-    /* ~text-base */
-    font-size: 1rem;
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+label {
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
 
-  button {
-    /* ~text-base */
-    font-size: 1rem;
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+button {
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+}
 
-  input {
-    /* ~text-base */
-    font-size: 1rem;
-    font-weight: var(--font-weight-normal);
-    line-height: 1.5;
-  }
+input {
+  font-size: 1rem;
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
 }
 
 html {
   font-size: var(--font-size);
 }
 
-/* Meal Plan Styling */
+/* ============================================
+   4. LAYOUT COMPONENTS
+   ============================================ */
+
+/* --- Meal Plan Styling --- */
 .meal-plan-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -233,7 +391,7 @@ html {
 
 .meal-type-label {
   font-weight: 600;
-  color: #1f2937; /* Darkened for better contrast */
+  color: var(--gray-800);
   padding: 1rem 0.5rem;
   text-align: right;
   align-self: center;
@@ -242,9 +400,9 @@ html {
 .day-header {
   text-align: center;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--gray-800);
   padding: 0.75rem 0.5rem;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid var(--gray-200);
   margin-bottom: 0.5rem;
 }
 
@@ -252,62 +410,62 @@ html {
   min-height: 120px;
   border-radius: 8px;
   padding: 1rem;
-  border: 2px dashed #d1d5db;
+  border: 2px dashed var(--gray-300);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
-  background: #f9fafb;
+  background: var(--gray-50);
 }
 
 .meal-slot:hover {
-  border-color: #9ca3af;
-  background: #f3f4f6;
+  border-color: var(--gray-400);
+  background: var(--gray-100);
 }
 
 .meal-slot.breakfast {
-  background: #fff7ed;
-  border-color: #fed7aa;
+  background: var(--breakfast-bg);
+  border-color: var(--breakfast-border);
   color: #000000;
 }
 
 .meal-slot.breakfast:hover {
-  border-color: #fb923c;
-  background: #ffedd5;
+  border-color: var(--breakfast-border-hover);
+  background: var(--breakfast-bg-hover);
 }
 
 .meal-slot.lunch {
-  background: #f0fdf4;
-  border-color: #bbf7d0;
+  background: var(--lunch-bg);
+  border-color: var(--lunch-border);
   color: #000000;
 }
 
 .meal-slot.lunch:hover {
-  border-color: #4ade80;
-  background: #dcfce7;
+  border-color: var(--lunch-border-hover);
+  background: var(--lunch-bg-hover);
 }
 
 .meal-slot.dinner {
-  background: #eff6ff;
-  border-color: #bfdbfe;
+  background: var(--dinner-bg);
+  border-color: var(--dinner-border);
   color: #000000;
 }
 
 .meal-slot.dinner:hover {
-  border-color: #60a5fa;
-  background: #dbeafe;
+  border-color: var(--dinner-border-hover);
+  background: var(--dinner-bg-hover);
 }
 
 .meal-slot.snack {
-  background: #faf5ff;
-  border-color: #e9d5ff;
+  background: var(--snack-bg);
+  border-color: var(--snack-border);
   color: #000000;
 }
 
 .meal-slot.snack:hover {
-  border-color: #c084fc;
-  background: #f3e8ff;
+  border-color: var(--snack-border-hover);
+  background: var(--snack-bg-hover);
 }
 
 .meal-slot.filled {
@@ -330,7 +488,7 @@ html {
 .meal-title {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
+  color: var(--gray-700);
   margin-bottom: 0.5rem;
   text-align: center;
 }
@@ -341,25 +499,26 @@ html {
   justify-content: center;
 }
 
+/* Meal action buttons - now use .btn system */
 .meal-action-btn {
+  /* Specialized sizing only */
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
   border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s;
 }
 
 .view-btn {
-  background: #f3f4f6;
-  color: #374151;
+  /* Uses .btn-light variant colors */
+  background: var(--gray-100);
+  color: var(--gray-700);
 }
 
 .view-btn:hover {
-  background: #e5e7eb;
+  background: var(--gray-200);
 }
 
 .remove-btn {
+  /* Uses .btn-danger variant colors */
   background: #fef2f2;
   color: #000000;
 }
@@ -373,6 +532,11 @@ html {
   font-size: 0.9rem;
 }
 
+/* ============================================
+   7. MEDIA QUERIES & RESPONSIVE DESIGN
+   ============================================ */
+
+/* --- Meal Plan Responsive --- */
 @media (max-width: 768px) {
   .meal-plan-grid {
     grid-template-columns: 1fr;
@@ -396,7 +560,7 @@ html {
   }
 }
 
-/* Header & navigation */
+/* --- Header & Navigation --- */
 .site-header {
   background: #00000023;
   border-bottom: 1px solid #00000038;
@@ -428,7 +592,7 @@ html {
 .brand-title {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--gray-700);
 }
 
 .desktop-nav {
@@ -436,17 +600,25 @@ html {
   align-items: center;
   gap: 0.5rem;
 }
-.nav-btn {
+
+/* Base navigation link styles - shared between desktop and mobile */
+.nav-link {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: none;
+  color: var(--gray-700);
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+/* Desktop-specific nav button styling */
+.nav-btn {
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   border: 1px solid #e6e7eb;
   background: transparent;
-  color: #374151;
   cursor: pointer;
-  text-decoration: none;
 }
 
 .nav-active {
@@ -456,12 +628,12 @@ html {
 }
 .nav-inactive {
   background: transparent !important;
-  color: #374151 !important;
+  color: var(--gray-700) !important;
   border: 1px solid transparent;
   border-color: #000 !important;
 }
 .nav-inactive:hover {
-  background: #f3f4f6 !important;
+  background: var(--gray-100) !important;
 }
 .nav-icon {
   font-size: 0.95rem;
@@ -475,21 +647,31 @@ html {
 }
 
 .mobile-menu-button {
-  background: none;
-  border: none;
-  font-size: 1.75rem;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  font-size: 1.5rem;
   cursor: pointer;
-  padding: 0.5rem;
-  color: #1f2937;
-  transition: transform 0.2s;
+  padding: 0.5rem 0.75rem;
+  color: var(--gray-800);
+  transition: all 0.2s ease;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .mobile-menu-button:hover {
-  transform: scale(1.1);
+  background: var(--gray-200);
+  border-color: var(--gray-400);
+  transform: scale(1.05);
 }
 
 .mobile-menu-button:active {
   transform: scale(0.95);
+  background: var(--gray-300);
 }
 
 .mobile-menu-dropdown {
@@ -501,10 +683,10 @@ html {
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  min-width: 200px;
+  min-width: 240px;
   z-index: 1000;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--gray-200);
 }
 
 .mobile-menu-dropdown.open {
@@ -523,16 +705,21 @@ html {
   }
 }
 
+/* Mobile-specific nav button styling */
 .mobile-nav-btn {
+  /* Base nav-link styles applied */
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
   text-decoration: none;
-  color: #1f2937;
+  color: var(--gray-800);
   font-weight: 500;
-  transition: background 0.2s;
-  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--gray-100);
+  cursor: pointer;
+  /* Ensure text doesn't wrap */
+  white-space: nowrap;
 }
 
 .mobile-nav-btn:last-child {
@@ -540,21 +727,29 @@ html {
 }
 
 .mobile-nav-btn:hover {
-  background: #f9fafb;
+  background: var(--gray-50);
+  color: var(--gray-900);
 }
 
 .mobile-nav-btn:active {
-  background: #f3f4f6;
+  background: var(--gray-100);
 }
 
 .mobile-nav-btn .nav-icon {
   font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
 }
 
 .mobile-nav-btn .nav-label {
   font-size: 1rem;
+  line-height: 1.5;
+  flex: 1;
 }
 
+/* --- Navigation Responsive --- */
 @media (max-width: 768px) {
   .desktop-nav {
     display: none;
@@ -567,7 +762,7 @@ html {
   }
 }
 
-/* Footer */
+/* --- Footer --- */
 .site-footer {
   background: #00000017;
   border-top: 1px solid #00000038;
@@ -592,21 +787,23 @@ html {
   width: auto;
 }
 .footer-title {
-  color: #6b7280;
+  color: var(--gray-500);
   font-weight: 500;
 }
 .footer-copy {
   text-align: right;
 }
 .footer-note {
-  color: #6b7280;
+  color: var(--gray-500);
   font-size: 0.9rem;
 }
 .footer-subnote {
-  color: #9ca3af;
+  color: var(--gray-400);
   font-size: 0.8rem;
   margin-top: 0.25rem;
 }
+
+/* --- Footer Responsive --- */
 @media (max-width: 640px) {
   .site-footer-inner {
     flex-direction: column;
@@ -617,7 +814,7 @@ html {
   }
 }
 
-/* Toasts */
+/* --- Toast Notifications --- */
 .toast-container {
   position: fixed;
   right: 1rem;
@@ -647,16 +844,16 @@ html {
   opacity: 0;
 }
 .toast-success {
-  background: #059669;
+  background: var(--success-600);
 }
 .toast-error {
-  background: #dc2626;
+  background: var(--error-600);
 }
 .toast-info {
-  background: #2563eb;
+  background: var(--info-600);
 }
 
-/* Page helpers */
+/* --- Page Structure Utilities --- */
 .page-main {
   max-width: 1200px;
   margin: 0 auto;
@@ -665,11 +862,11 @@ html {
 .page-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--gray-800);
   margin-bottom: 1.25rem;
 }
 .muted {
-  color: #4b5563; /* Improved from #6b7280 for better contrast (6.38:1 vs 4.58:1) */
+  color: var(--text-muted);
 }
 
 /* Grid for meal plan */
@@ -697,6 +894,12 @@ html {
     width: 100%; /* Ensure full width */
   }
 
+  /* ============================================
+   5. PAGE-SPECIFIC STYLES
+   ============================================ */
+
+  /* --- Search Page --- */
+
   /* Hide the meal type labels (left column) and top day headers on mobile */
   .meal-type-label {
     display: none;
@@ -704,11 +907,11 @@ html {
 
   /* Create mobile day sections */
   .mobile-day-section {
-    background: #fff;
+    background: var(--bg-white);
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--gray-200);
     width: 100%; /* Force all day sections to be same width */
     box-sizing: border-box; /* Include padding and border in width */
   }
@@ -716,10 +919,10 @@ html {
   .mobile-day-header {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--gray-800);
     margin-bottom: 1rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid #e5e7eb;
+    border-bottom: 2px solid var(--gray-200);
   }
 
   .mobile-meal-group {
@@ -733,7 +936,7 @@ html {
   .mobile-meal-type {
     font-size: 0.85rem;
     font-weight: 600;
-    color: #4b5563; /* Improved contrast */
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.5rem;
@@ -757,7 +960,11 @@ html {
 
 /* end appended block */
 
-/* Search page styles */
+/* ============================================
+   5. PAGE-SPECIFIC STYLES
+   ============================================ */
+
+/* --- Search Page --- */
 .search-header {
   margin-bottom: 2rem;
 }
@@ -766,27 +973,27 @@ html {
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--gray-200);
   font-size: 1rem;
   margin-bottom: 1rem;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #6b7280;
+  border-color: var(--gray-500);
   box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
 }
 
-.visually-hidden{
+.visually-hidden {
   position: absolute !important;
-  height: 1px; 
-  width: 1px; 
+  height: 1px;
+  width: 1px;
   overflow: hidden;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .active-filter-info {
-  background: #f3f4f6;
+  background: var(--gray-100);
   border-radius: 8px;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
@@ -795,21 +1002,14 @@ html {
   align-items: center;
 }
 
+/* Clear filter button - uses .btn system */
 .clear-filter-btn {
-  background: #6b7280;
-  color: white;
-  border: none;
+  /* Specific sizing for filter context */
   padding: 0.25rem 0.75rem;
-  border-radius: 4px;
   font-size: 0.875rem;
-  cursor: pointer;
 }
 
-.clear-filter-btn:hover {
-  background: #374151;
-}
-
-/* Recipe Card Styles */
+/* --- Recipe Cards --- */
 .recipes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -818,28 +1018,28 @@ html {
 }
 
 .recipe-card {
-  background: #fff;
+  background: var(--bg-white);
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.2s;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--gray-200);
   max-width: 350px;
   width: 100%;
   box-sizing: border-box;
 }
 .recipe-card:hover {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
-  border-color: #d1d5db;
+  border-color: var(--gray-300);
 }
 
 .recipe-image-wrap {
   width: 100%;
   height: 160px;
   overflow: hidden;
-  background: #f3f4f6;
+  background: var(--gray-100);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -865,7 +1065,7 @@ html {
 }
 .recipe-meta {
   font-size: 0.95rem;
-  color: #6b7280;
+  color: var(--gray-500);
   margin-bottom: 0.5rem;
 }
 .recipe-tags {
@@ -875,7 +1075,7 @@ html {
   margin-bottom: 0.5rem;
 }
 .tag {
-  background: #f3f4f6;
+  background: var(--gray-100);
   color: #000000;
   border-radius: 6px;
   padding: 0.2rem 0.6rem;
@@ -887,6 +1087,10 @@ html {
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
+
+/* ============================================
+   6. ANIMATIONS
+   ============================================ */
 
 /* ============================================
    CSS ANIMATIONS - Simplified
@@ -923,6 +1127,8 @@ html {
   transform: scale(1.08);
 }
 
+/* --- Inspiration Page --- */
+
 /* ============================================
    INSPIRATION VIEW STYLES
    ============================================ */
@@ -947,25 +1153,21 @@ html {
   margin-bottom: 2rem;
 }
 
-.inspiration-card {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+/* Inspiration cards use the base .recipe-card with .inspiration modifier */
+.recipe-card.inspiration {
+  /* Specific hover effect for inspiration cards */
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
 }
 
-.inspiration-card:hover {
+.recipe-card.inspiration:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-.inspiration-card .recipe-image {
-  width: 100%;
+.recipe-card.inspiration .recipe-image {
   height: 200px;
-  object-fit: cover;
 }
 
 .recipe-info {
@@ -995,38 +1197,7 @@ html {
   font-weight: 500;
 }
 
-.btn-primary,
-.btn-secondary {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-primary {
-  background: #f97316;
-  color: rgb(0, 0, 0);
-}
-
-.btn-primary:hover {
-  background: #ea580c;
-  transform: translateY(-2px);
-}
-
-.btn-secondary {
-  background: #9c9df3;
-  color: rgb(0, 0, 0);
-}
-
-.btn-secondary:hover {
-  background: #4f46e5;
-}
-
+/* Inspiration page buttons use unified .btn system with variants */
 #refresh-inspiration {
   display: block;
   margin: 0 auto;
@@ -1034,11 +1205,7 @@ html {
   font-size: 1rem;
 }
 
-#refresh-inspiration:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background: #9ca3af;
-}
+/* --- Shopping List Page --- */
 
 /* Shopping List Styles */
 .shopping-page-main {
@@ -1048,14 +1215,14 @@ html {
 }
 
 .shopping-subtitle {
-  color: #4b5563; /* Improved contrast */
+  color: var(--text-muted);
   margin-bottom: 2rem;
   text-align: center;
 }
 
 .shopping-empty {
   text-align: center;
-  color: #4b5563; /* Improved contrast */
+  color: var(--text-muted);
   margin-top: 2rem;
 }
 
@@ -1068,11 +1235,11 @@ html {
 }
 
 .aisle-header {
-  background: #f3f4f6;
+  background: var(--gray-100);
   padding: 1rem 1.25rem;
   font-weight: 600;
-  color: #1f2937; /* Improved contrast */
-  border-bottom: 2px solid #e5e7eb;
+  color: var(--gray-800);
+  border-bottom: 2px solid var(--gray-200);
 }
 
 .aisle-list {
@@ -1083,7 +1250,7 @@ html {
 
 .ingredient-item {
   padding: 0.75rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--gray-200);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -1106,5 +1273,5 @@ html {
 
 .ingredient-label.checked {
   text-decoration: line-through;
-  color: #9ca3af;
+  color: var(--gray-400);
 }
