@@ -958,7 +958,7 @@ html {
   }
 }
 
-/* end appended block */
+
 
 /* ============================================
    5. PAGE-SPECIFIC STYLES
@@ -1197,7 +1197,7 @@ html {
   font-weight: 500;
 }
 
-/* Inspiration page buttons use unified .btn system with variants */
+
 #refresh-inspiration {
   display: block;
   margin: 0 auto;
