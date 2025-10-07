@@ -269,7 +269,7 @@ html {
 .meal-slot.breakfast {
   background: #fff7ed;
   border-color: #fed7aa;
-  color: #ea580c;
+  color: #000000;
 }
 
 .meal-slot.breakfast:hover {
@@ -280,7 +280,7 @@ html {
 .meal-slot.lunch {
   background: #f0fdf4;
   border-color: #bbf7d0;
-  color: #16a34a;
+  color: #000000;
 }
 
 .meal-slot.lunch:hover {
@@ -291,7 +291,7 @@ html {
 .meal-slot.dinner {
   background: #eff6ff;
   border-color: #bfdbfe;
-  color: #2563eb;
+  color: #000000;
 }
 
 .meal-slot.dinner:hover {
@@ -302,7 +302,7 @@ html {
 .meal-slot.snack {
   background: #faf5ff;
   border-color: #e9d5ff;
-  color: #9333ea;
+  color: #000000;
 }
 
 .meal-slot.snack:hover {
@@ -361,7 +361,7 @@ html {
 
 .remove-btn {
   background: #fef2f2;
-  color: #dc2626;
+  color: #000000;
 }
 
 .remove-btn:hover {
@@ -398,7 +398,7 @@ html {
 
 /* Header & navigation */
 .site-header {
-  background: #00000015;
+  background: #00000023;
   border-bottom: 1px solid #00000038;
   position: sticky;
   top: 0;
@@ -777,6 +777,14 @@ html {
   box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
 }
 
+.visually-hidden{
+  position: absolute !important;
+  height: 1px; 
+  width: 1px; 
+  overflow: hidden;
+  white-space: nowrap; 
+}
+
 .active-filter-info {
   background: #f3f4f6;
   border-radius: 8px;
@@ -868,7 +876,7 @@ html {
 }
 .tag {
   background: #f3f4f6;
-  color: #6b7280;
+  color: #000000;
   border-radius: 6px;
   padding: 0.2rem 0.6rem;
   font-size: 0.85rem;
@@ -980,8 +988,8 @@ html {
 .badge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  background: #f97316;
-  color: white;
+  background: #ff6b02;
+  color: rgb(0, 0, 0);
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -1002,7 +1010,7 @@ html {
 
 .btn-primary {
   background: #f97316;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .btn-primary:hover {
@@ -1011,8 +1019,8 @@ html {
 }
 
 .btn-secondary {
-  background: #6366f1;
-  color: white;
+  background: #9c9df3;
+  color: rgb(0, 0, 0);
 }
 
 .btn-secondary:hover {

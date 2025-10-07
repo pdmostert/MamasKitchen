@@ -17,7 +17,8 @@ Mama's Kitchen Meal Planner is a web application designed to help users plan the
 - Backend: localStorage for data persistence
 - Framework: None (Vanilla JavaScript)
 - Authentication: None (for simplicity)
-- Datasource : API from https://spoonacular.com/food-api
+- Datasource : API from https://spoonacular.com/food-api 
+               MealDB API for recipe inspiration https://www.themealdb.com/api.php
 
 ## Installation
 

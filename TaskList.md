@@ -39,3 +39,39 @@ Incorporate CSS animation.
 The code must be clean, well-commented, and organized. Show a good organization (ES Modules, classes, etc).
 The code is error free (according to ESLint rules).
 The application meets web frontend development standards using valid, contemporary HTML and CSS. There are no accessibility errors and the pages follow best practices and basic SEO recommendations.
+
+
+
+## Skill Development Outcome
+This outcome is demonstrated by your skill in the following learning objectives:
+
+Objective	%	Description
+JavaScript	25%	Robust programming logic is demonstrated.
+
+For example, validating the screen data, looping through an array of JSON data to display to the screen, creating and using events, changing element styles with JS, changing element classes to use different CSS rules.
+Third-party APIs	15%	APIs are used effectively, including APIs that provide rich JSON data.
+JSON	15%	Demonstrate skill processing JSON data to dynamically update the website.
+CSS	15%	Appropriate use of Transforms and Transitions. For example: Add round the edges to DIV, add shadows. enlarge an input field on focus and shrink it on blur, Add borders. CSS should subtly add style to a page.
+Events	15%	Use events to enhance the user experience. For example, increase the size of the input field on focus or add a shadow. React to a button click. Initialized the page with data once the onload event triggers.
+Local Storage	5%	Local storage is used effectively.
+
+
+Learning Objective	Description	Where can this be seen in your final personal project application?
+JavaScript		
+		
+		
+Third-party APIs		
+		
+		
+JSON		
+		
+		
+CSS		
+		
+		
+Events		
+		
+		
+Local Storage		
+		
+		

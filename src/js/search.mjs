@@ -192,6 +192,11 @@ export class SearchView {
     title.className = "page-title";
     title.textContent = "Search Recipes";
 
+    const searchLabel = document.createElement("label");
+    searchLabel.htmlFor = "recipe-search-input";
+    searchLabel.className = "visually-hidden";
+    searchLabel.textContent = "Search recipes, ingredients, or tags";
+
     const searchInput = document.createElement("input");
     searchInput.type = "search";
     searchInput.placeholder = "Search recipes, ingredients, or tags...";
@@ -199,6 +204,7 @@ export class SearchView {
     searchInput.id = "recipe-search-input";
 
     header.appendChild(title);
+    header.appendChild(searchLabel);
     header.appendChild(searchInput);
 
     searchInput.addEventListener("input", () => {
