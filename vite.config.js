@@ -12,7 +12,7 @@ export default defineConfig({
         search: resolve(__dirname, "src/search/index.html"),
         favorites: resolve(__dirname, "src/favorites/index.html"),
         shopping: resolve(__dirname, "src/shopping/index.html"),
-        inspiration: resolve(__dirname, "src/inspiration/index.html"),
+        inspiration: resolve(__dirname, "src/Inspiration/index.html"),
       },
     },
   },
